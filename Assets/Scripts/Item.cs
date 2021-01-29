@@ -31,6 +31,7 @@ public class Item : MonoBehaviour
             sprite.sortingOrder = 1000;
             transform.parent = null;
             drawer = null;
+            sprite.maskInteraction = SpriteMaskInteraction.None;
         }
     }
 
@@ -66,6 +67,7 @@ public class Item : MonoBehaviour
                             transform.localPosition = pos;
                             
                             drawer = _drawer;
+                            sprite.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
                             ItemManager.Instance.BringToTop(this);
                             break;
                         }
