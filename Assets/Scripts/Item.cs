@@ -18,6 +18,7 @@ public class Item : MonoBehaviour
     {
         collider = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
+        sprite.color = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
     }
 
     private bool hover = false;
