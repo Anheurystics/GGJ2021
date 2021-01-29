@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class ItemManager : MonoSingleton<ItemManager>
 {
     private List<Item> itemLayers;
+    [SerializeField] private SortingGroup[] drawers;
 
     void Start()
     {

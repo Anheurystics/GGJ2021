@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Item : MonoBehaviour
@@ -8,6 +9,7 @@ public class Item : MonoBehaviour
     private BoxCollider2D collider;
     private SpriteRenderer sprite;
     private Vector3 originalScale = Vector3.one;
+    private Drawer drawer;
     
     public SpriteRenderer Sprite => sprite;
     
@@ -19,13 +21,15 @@ public class Item : MonoBehaviour
 
     void OnMouseDown()
     {
-        if(currentSelected == null)
+        if(currentSelected == null && (drawer == null || Drawer.opened == drawer))
         {
             currentSelected = this;
             collider.enabled = false;
             originalScale = transform.localScale;
             transform.localScale *= 0.4f;
             sprite.sortingOrder = 1000;
+            transform.parent = null;
+            drawer = null;
         }
     }
 
@@ -42,11 +46,30 @@ public class Item : MonoBehaviour
 
             if(Input.GetMouseButton(1))
             {
-                currentSelected = null;
-                collider.enabled = true;
-                transform.localScale = originalScale;
-                
-                ItemManager.Instance.BringToTop(this);
+                RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity, 1 << LayerMask.NameToLayer("ItemRoot"));
+                if(hits.Length > 0)
+                {
+                    foreach(var hit in hits)
+                    {
+                        var container = hit.collider.transform;
+                        var _drawer = container.parent?.GetComponent<Drawer>();
+                        if(_drawer != null)
+                        {
+                            currentSelected = null;
+                            collider.enabled = true;
+                            transform.localScale = originalScale;
+                            transform.SetParent(container, true);
+                            
+                            var pos = transform.localPosition;
+                            pos.z = 0;
+                            transform.localPosition = pos;
+                            
+                            drawer = _drawer;
+                            ItemManager.Instance.BringToTop(this);
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
