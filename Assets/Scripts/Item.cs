@@ -2,15 +2,19 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Item : MonoBehaviour
 {
     public static Item currentSelected = null;
+
+    public float holdTime = 0.5f;
     
     private BoxCollider2D collider;
     private SpriteRenderer sprite;
     private Vector3 originalScale = Vector3.one;
     private Drawer drawer;
+    private ItemDescription itemDescription;
     
     public SpriteRenderer Sprite => sprite;
     
@@ -19,6 +23,7 @@ public class Item : MonoBehaviour
         collider = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         sprite.color = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
+        itemDescription = (ItemDescription) GameObject.Find("ItemDescriptionUI").GetComponent(typeof(ItemDescription));
     }
 
     private bool hover = false;
@@ -33,13 +38,24 @@ public class Item : MonoBehaviour
         hover = false;
     }
 
+    void OnMouseDown()
+    {
+        StartCoroutine("ShowItemDescription");
+    }
+
+    void OnMouseUp()
+    {
+        StopCoroutine("ShowItemDescription");
+        this.itemDescription.HideItemDescription();
+    }
+
     void Update()
     {
         if(currentSelected == this)
         {
             var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorldPos.x += 0.5f;
-            mouseWorldPos.y -= 0.5f;
+            // mouseWorldPos.x += 0.5f;
+            // mouseWorldPos.y -= 0.5f;
             mouseWorldPos.z = 0;
 
             transform.position = mouseWorldPos;
@@ -93,5 +109,11 @@ public class Item : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator ShowItemDescription()
+    {
+        yield return new WaitForSeconds(this.holdTime);
+        this.itemDescription.ShowItemDescription();
     }
 }
