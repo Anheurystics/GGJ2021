@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Runtime.InteropServices;
+using DG.Tweening;
 using UnityEngine;
 
 public class Item : MonoBehaviour
@@ -26,7 +27,7 @@ public class Item : MonoBehaviour
             currentSelected = this;
             collider.enabled = false;
             originalScale = transform.localScale;
-            transform.localScale *= 0.4f;
+            transform.DOScale(originalScale * 0.4f, 0.2f);
             sprite.sortingOrder = 1000;
             transform.parent = null;
             drawer = null;
@@ -57,7 +58,7 @@ public class Item : MonoBehaviour
                         {
                             currentSelected = null;
                             collider.enabled = true;
-                            transform.localScale = originalScale;
+                            transform.DOScale(originalScale, 0.2f);
                             transform.SetParent(container, true);
                             
                             var pos = transform.localPosition;

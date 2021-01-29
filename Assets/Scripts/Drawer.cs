@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Drawer : MonoBehaviour
@@ -28,16 +29,17 @@ public class Drawer : MonoBehaviour
 
     public void Open()
     {
-        transform.position = originalPos - (Vector3.up * 4);
         containerCollider.gameObject.SetActive(true);
         itemRootCollider.gameObject.SetActive(true);
+        transform.DOMoveY(originalPos.y - 4f, 0.2f);
     }
 
     public void Close()
     {
-        transform.position = originalPos;
-        containerCollider.gameObject.SetActive(false);
-        itemRootCollider.gameObject.SetActive(false);
+        transform.DOMoveY(originalPos.y, 0.2f).OnComplete(() => {
+            containerCollider.gameObject.SetActive(false);
+            itemRootCollider.gameObject.SetActive(false);
+        });
     }
 
     void Update()
