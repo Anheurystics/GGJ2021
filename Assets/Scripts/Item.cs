@@ -20,19 +20,16 @@ public class Item : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    void OnMouseDown()
+    private bool hover = false;
+
+    void OnMouseEnter()
     {
-        if(currentSelected == null && (drawer == null || Drawer.opened == drawer))
-        {
-            currentSelected = this;
-            collider.enabled = false;
-            originalScale = transform.localScale;
-            transform.DOScale(originalScale * 0.4f, 0.2f);
-            sprite.sortingOrder = 1000;
-            transform.parent = null;
-            drawer = null;
-            sprite.maskInteraction = SpriteMaskInteraction.None;
-        }
+        hover = true;
+    }
+
+    void OnMouseExit()
+    {
+        hover = false;
     }
 
     void Update()
@@ -46,7 +43,7 @@ public class Item : MonoBehaviour
 
             transform.position = mouseWorldPos;
 
-            if(Input.GetMouseButton(1))
+            if(Input.GetMouseButtonDown(0))
             {
                 RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity, 1 << LayerMask.NameToLayer("ItemRoot"));
                 if(hits.Length > 0)
@@ -71,6 +68,26 @@ public class Item : MonoBehaviour
                             ItemManager.Instance.BringToTop(this);
                             break;
                         }
+                    }
+                }
+            }
+        }
+        else
+        {
+            if(hover)
+            {
+                if(Input.GetMouseButtonDown(1))
+                {
+                    if(currentSelected == null && (drawer == null || Drawer.opened == drawer))
+                    {
+                        currentSelected = this;
+                        collider.enabled = false;
+                        originalScale = transform.localScale;
+                        transform.DOScale(originalScale * 0.4f, 0.2f);
+                        sprite.sortingOrder = 1000;
+                        transform.parent = null;
+                        drawer = null;
+                        sprite.maskInteraction = SpriteMaskInteraction.None;
                     }
                 }
             }
