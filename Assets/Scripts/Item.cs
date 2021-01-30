@@ -8,8 +8,8 @@ public class Item : MonoBehaviour
 
     public float holdTime = 0.5f;
     
-    private BoxCollider2D collider;
-    private SpriteRenderer sprite;
+    [SerializeField] private BoxCollider2D collider;
+    [SerializeField] private SpriteRenderer sprite;
     private Vector3 originalScale = Vector3.one;
     private Drawer drawer;
     private ItemDescription itemDescription;
@@ -18,9 +18,6 @@ public class Item : MonoBehaviour
     
     void Start()
     {
-        collider = GetComponent<BoxCollider2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        sprite.color = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
         itemDescription = (ItemDescription) GameObject.Find("ItemDescriptionUI").GetComponent(typeof(ItemDescription));
     }
 
