@@ -20,7 +20,22 @@ public class Customer : MonoBehaviour
 
     [SerializeField] private AudioClip sfxArrive;
 
-    public void Spawn(int count, bool hasItemToGive)
+    public void SetCustomerType(bool hasItemToGive)
+    {
+        // Decide on whether they give items or need an item
+        _hasItem = hasItemToGive;
+
+        // If need item, set a needed item
+        _neededItem = null;
+        if (!_hasItem)
+        {
+            _neededItem = Instantiate(itemPool.PickRandom(), transform);
+            _neededItem.gameObject.SetActive(false);  // I just need the item object for the data
+            _neededItem.Randomize();
+        }
+    }
+
+    public void Spawn(int count)
     {
         sprite.sortingOrder = -count;
         transform.localPosition = new Vector3(3 - (1.5f * count), 4.5f - (0.2f * count));
@@ -28,18 +43,13 @@ public class Customer : MonoBehaviour
         var spawnColor = Color.white * (1.0f - (count * 0.2f));
         spawnColor.a = 1.0f;
         sprite.color = spawnColor;
-
-        // Decide on whether they give items or need an item
-        _hasItem = hasItemToGive;
-
-        // If need item, set a needed item
-        _neededItem = null;
-        if (!hasItemToGive)
+        if (!_hasItem)
         {
-            _neededItem = Instantiate(itemPool.PickRandom(), transform);
-            _neededItem.gameObject.SetActive(false);  // I just need the item object for the data
-            _neededItem.Randomize();
             Debug.Log("needs " + _neededItem.itemSignature);
+        }
+        else
+        {
+            Debug.Log("will give items");
         }
     }
 
@@ -67,13 +77,21 @@ public class Customer : MonoBehaviour
     {
         if (hasItem)
         {
-            ItemManager.Instance.SpawnItem();
+            GiveItems(3);
             Invoke(nameof(DespawnCustomer), 0.25f);
             CustomerSpawner.Instance.Bubble.ShowBubble(null);
         }
         else
         {
             CustomerSpawner.Instance.Bubble.ShowBubble(_neededItem);
+        }
+    }
+
+    private void GiveItems(int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            ItemManager.Instance.SpawnItem();
         }
     }
 

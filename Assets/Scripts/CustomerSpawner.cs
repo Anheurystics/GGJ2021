@@ -9,6 +9,11 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
 {
     [SerializeField] private Transform customerRoot;
     [SerializeField] private Customer customerPrefab;
+    [SerializeField] private int customerCount;
+
+    // pre-generated backlog of customers
+    private List<Customer> backlogCustomers;
+    // currently shown queue of customers
     private List<Customer> spawnedCustomers;
     [SerializeField] private AudioClip sfxLeave;
     [SerializeField] private Bubble bubble;
@@ -16,7 +21,23 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
 
     void Start()
     {
+        // Instantiate variables
         spawnedCustomers = new List<Customer>();
+        backlogCustomers = new List<Customer>();
+
+        // Pre-generate a random list of customers
+        customerCount = 10;
+        for (int i = 0; i < customerCount; i++)
+        {
+            var customer = Instantiate(customerPrefab, customerRoot);
+            // don't spawn them in yet
+            customer.gameObject.SetActive(false);
+            // set customer needs and attributes
+            bool hasItem = Random.Range(0f, 1f) > 0.5;
+            customer.SetCustomerType(hasItem);
+
+            backlogCustomers.Add(customer);
+        }
     }
 
     void Update()
@@ -40,8 +61,18 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
 
     public void SpawnCustomer(bool hasItem = false)
     {
-        var customer = Instantiate(customerPrefab, customerRoot);
-        customer.Spawn(5, hasItem);
+        if (backlogCustomers.Count <= 0)
+        {
+            // backlog empty
+            return;
+        }
+
+        var customer = backlogCustomers[0];
+        backlogCustomers.RemoveAt(0);
+
+        // time to spawn them in
+        customer.gameObject.SetActive(true);
+        customer.Spawn(5);
         customer.MoveTo(spawnedCustomers.Count);
 
         spawnedCustomers.Insert(0, customer);
