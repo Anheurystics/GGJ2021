@@ -1,20 +1,26 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    [Serializable]
+    public struct SpritePart
+    {
+        public Sprite[] variants;
+    }
+
     public static Item currentSelected = null;
 
     public float holdTime = 0.5f;
     
     [SerializeField] private BoxCollider2D collider;
-    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private SpriteRenderer[] spriteParts;
+    [SerializeField] private SpritePart[] spriteVariants;
     private Vector3 originalScale = Vector3.one;
     private Drawer drawer;
     private ItemDescription itemDescription;
-    
-    public SpriteRenderer Sprite => sprite;
     
     void Start()
     {
@@ -91,8 +97,9 @@ public class Item : MonoBehaviour
                             drawer = _drawer;
                             drawer.AddItem(this);
 
-                            sprite.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-                            sprite.sortingLayerName = "Drawer";
+                            SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
+                            SetSortingLayer("Drawer");
+
                             break;
                         }
                     }
@@ -116,13 +123,48 @@ public class Item : MonoBehaviour
                         transform.parent = null;
                         drawer?.RemoveItem(this);
                         drawer = null;
-                        
-                        sprite.maskInteraction = SpriteMaskInteraction.None;
-                        sprite.sortingLayerName = "Mouse";
-                        sprite.sortingOrder = 1000;
+
+                        SetMaskInteraction(SpriteMaskInteraction.None);
+                        SetSortingLayer("Mouse");
+                        SetSortingOrder(1000);                        
                     }
                 }
             }
+        }
+    }
+
+    public void Randomize()
+    {
+        for(int i = 0; i < spriteParts.Length; i++)
+        {
+            var part = spriteParts[i];
+            var variants = spriteVariants[i].variants;
+
+            part.sprite = variants[UnityEngine.Random.Range(0, variants.Length)];
+        }
+    }
+
+    public void SetMaskInteraction(SpriteMaskInteraction interaction)
+    {
+        foreach(var part in spriteParts)
+        {
+            part.maskInteraction = interaction;
+        }
+    }
+
+    public void SetSortingLayer(string layerName)
+    {
+        foreach(var part in spriteParts)
+        {
+            part.sortingLayerName = layerName;
+        }
+    }
+
+    public void SetSortingOrder(int order)
+    {
+        foreach(var part in spriteParts)
+        {
+            part.sortingOrder = order;
         }
     }
 

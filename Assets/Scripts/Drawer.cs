@@ -64,7 +64,7 @@ public class Drawer : MonoBehaviour
     {
         for(int i = 0; i < items.Count; i++)
         {
-            items[i].Sprite.sortingOrder = i;
+            items[i].SetSortingOrder(i);
         }
     }
 

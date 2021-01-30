@@ -1,24 +1,22 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class ItemManager : MonoSingleton<ItemManager>
 {
-    [SerializeField] private Sprite[] randomShapes;
-    [SerializeField] private Color[] randomColors;
-    [SerializeField] private float[] randomScales;
+    [SerializeField] private Transform itemStart;
+    [SerializeField] private Transform itemEnd;
     [SerializeField] private Transform tray;
     [SerializeField] private Item itemPrefab;
 
     public void SpawnItem()
     {
         var newItem = Instantiate(itemPrefab, tray);
-        newItem.transform.localPosition = new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0);
-        newItem.transform.localScale = Vector3.one * PickRandom(randomScales);
-        newItem.Sprite.sprite = PickRandom(randomShapes);
-        newItem.Sprite.color = PickRandom(randomColors);
-    }
+        newItem.transform.localPosition = itemStart.localPosition;
+        newItem.Randomize();
 
-    private T PickRandom<T>(T[] arr)
-    {
-        return arr[Random.Range(0, arr.Length)];
+        newItem.SetSortingLayer("Slot");
+        newItem.SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
+
+        newItem.transform.DOLocalMove(itemEnd.localPosition, 1.5f);
     }
 }
