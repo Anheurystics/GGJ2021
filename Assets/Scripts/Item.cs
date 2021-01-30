@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Runtime.InteropServices;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Item : MonoBehaviour
 {
@@ -82,6 +80,7 @@ public class Item : MonoBehaviour
                             
                             drawer = _drawer;
                             sprite.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+                            sprite.sortingLayerName = "Drawer";
                             ItemManager.Instance.BringToTop(this);
                             break;
                         }
@@ -105,6 +104,7 @@ public class Item : MonoBehaviour
                         transform.parent = null;
                         drawer = null;
                         sprite.maskInteraction = SpriteMaskInteraction.None;
+                        sprite.sortingLayerName = "Mouse";
                     }
                 }
             }

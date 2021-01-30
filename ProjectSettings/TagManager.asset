@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Drawer
+    uniqueID: 3045684247
+    locked: 0
+  - name: Window
+    uniqueID: 173577001
+    locked: 0
+  - name: Mouse
+    uniqueID: 4147061261
+    locked: 0
