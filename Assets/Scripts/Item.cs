@@ -8,8 +8,8 @@ public class Item : MonoBehaviour
 
     public float holdTime = 0.5f;
     
-    private BoxCollider2D collider;
-    private SpriteRenderer sprite;
+    [SerializeField] private BoxCollider2D collider;
+    [SerializeField] private SpriteRenderer sprite;
     private Vector3 originalScale = Vector3.one;
     private Drawer drawer;
     private ItemDescription itemDescription;
@@ -18,9 +18,6 @@ public class Item : MonoBehaviour
     
     void Start()
     {
-        collider = GetComponent<BoxCollider2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        sprite.color = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
         itemDescription = (ItemDescription) GameObject.Find("ItemDescriptionUI").GetComponent(typeof(ItemDescription));
     }
 
@@ -60,12 +57,25 @@ public class Item : MonoBehaviour
 
             if(Input.GetMouseButtonDown(0))
             {
-                RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity, 1 << LayerMask.NameToLayer("ItemRoot"));
+                int layerMask = 0;
+                layerMask |= 1 << LayerMask.NameToLayer("ItemRoot");
+                layerMask |= 1 << LayerMask.NameToLayer("Customer");
+
+                RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity, layerMask);
                 if(hits.Length > 0)
                 {
                     foreach(var hit in hits)
                     {
                         var container = hit.collider.transform;
+                        var _customer = container.GetComponent<Customer>();
+                        if(_customer != null)
+                        {
+                            Destroy(gameObject);
+                            currentSelected = null;
+                            CustomerSpawner.Instance.DespawnCustomer();
+                            break;
+                        }
+
                         var _drawer = container.parent?.GetComponent<Drawer>();
                         if(_drawer != null)
                         {
@@ -79,9 +89,10 @@ public class Item : MonoBehaviour
                             transform.localPosition = pos;
                             
                             drawer = _drawer;
+                            drawer.AddItem(this);
+
                             sprite.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
                             sprite.sortingLayerName = "Drawer";
-                            ItemManager.Instance.BringToTop(this);
                             break;
                         }
                     }
@@ -98,13 +109,17 @@ public class Item : MonoBehaviour
                     {
                         currentSelected = this;
                         collider.enabled = false;
+
                         originalScale = transform.localScale;
                         transform.DOScale(originalScale * 0.4f, 0.2f);
-                        sprite.sortingOrder = 1000;
+                        
                         transform.parent = null;
+                        drawer?.RemoveItem(this);
                         drawer = null;
+                        
                         sprite.maskInteraction = SpriteMaskInteraction.None;
                         sprite.sortingLayerName = "Mouse";
+                        sprite.sortingOrder = 1000;
                     }
                 }
             }
