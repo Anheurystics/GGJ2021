@@ -50,6 +50,9 @@ TagManager:
   - name: Slot
     uniqueID: 734102323
     locked: 0
+  - name: Bubble
+    uniqueID: 1355973839
+    locked: 0
   - name: Mouse
     uniqueID: 4147061261
     locked: 0

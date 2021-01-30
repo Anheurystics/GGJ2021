@@ -69,12 +69,18 @@ public class Customer : MonoBehaviour
         {
             ItemManager.Instance.SpawnItem();
             Invoke(nameof(DespawnCustomer), 0.25f);
+            CustomerSpawner.Instance.Bubble.ShowBubble(null);
+        }
+        else
+        {
+            CustomerSpawner.Instance.Bubble.ShowBubble(_neededItem);
         }
     }
 
     private void DespawnCustomer()
     {
         CustomerSpawner.Instance.DespawnCustomer();
+        CustomerSpawner.Instance.Bubble.HideBubble();
     }
 
     public bool NeedsThisItem(string itemSignature)

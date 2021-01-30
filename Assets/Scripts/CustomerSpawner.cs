@@ -11,6 +11,8 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
     [SerializeField] private Customer customerPrefab;
     private List<Customer> spawnedCustomers;
     [SerializeField] private AudioClip sfxLeave;
+    [SerializeField] private Bubble bubble;
+    public Bubble Bubble => bubble;
 
     void Start()
     {
