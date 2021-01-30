@@ -44,10 +44,16 @@ public class UIModal : MonoBehaviour
         Debug.Log("hiding modal...");
         if (this.isActive)
         {
-            this.modalBackground.gameObject.SetActive(false);
             this.modalPanel.DOMoveX(this.srcPos.x, this.tweenDuration);
             this.modalBackground.GetComponent<Image>().DOFade(0.0f, this.tweenDuration);
+            Invoke(nameof(DeactivateBackground), this.tweenDuration);
         }
         this.isActive = false;
+    }
+
+    // Separate method to allow invocation after the modal animation
+    private void DeactivateBackground()
+    {
+        this.modalBackground.gameObject.SetActive(false);
     }
 }
