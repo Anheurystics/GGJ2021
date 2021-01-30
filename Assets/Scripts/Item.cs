@@ -104,7 +104,7 @@ public class Item : MonoBehaviour
                         transform.DOScale(originalScale * 0.4f, 0.2f);
                         
                         transform.parent = null;
-                        drawer.RemoveItem(this);
+                        drawer?.RemoveItem(this);
                         drawer = null;
                         
                         sprite.maskInteraction = SpriteMaskInteraction.None;
