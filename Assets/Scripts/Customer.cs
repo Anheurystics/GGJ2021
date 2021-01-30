@@ -17,6 +17,8 @@ public class Customer : MonoBehaviour
 
     private Item _neededItem;
 
+    public Item[] heldItems;
+
     [SerializeField] private AudioClip sfxArrive;
 
     public void SetCustomerType(bool hasItemToGive)
@@ -28,6 +30,11 @@ public class Customer : MonoBehaviour
     public void SetNeededItem(Item neededItem = null)
     {
         _neededItem = neededItem;
+    }
+
+    public void SetHeldItems(Item[] held = null)
+    {
+        heldItems = held;
     }
 
     public void Spawn(int count)
@@ -72,7 +79,7 @@ public class Customer : MonoBehaviour
     {
         if (hasItem)
         {
-            GiveItems(CustomerSpawner.Instance.itemsToGive);
+            GiveItems();
             Invoke(nameof(DespawnCustomer), 0.25f);
             CustomerSpawner.Instance.Bubble.ShowBubble(null);
         }
@@ -82,11 +89,12 @@ public class Customer : MonoBehaviour
         }
     }
 
-    private void GiveItems(int n)
+    private void GiveItems()
     {
-        for (int i = 0; i < n; i++)
+        // should not be called if user isn't janitor
+        for (int i = 0; i < heldItems.Length; i++)
         {
-            ItemManager.Instance.SpawnItem();
+            ItemManager.Instance.SpawnItem(heldItems[i]);
         }
     }
 

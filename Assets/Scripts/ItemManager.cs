@@ -8,11 +8,29 @@ public class ItemManager : MonoSingleton<ItemManager>
     [SerializeField] private Transform tray;
     [SerializeField] private Item[] itemPrefabs;
 
-    public void SpawnItem()
+    public Item GenerateRandomItem()
     {
         var newItem = Instantiate(itemPrefabs.PickRandom(), tray);
-        newItem.transform.position = RandomPointInBounds(itemStart.bounds);
         newItem.Randomize();
+        // dont activate it yet
+        newItem.gameObject.SetActive(false);
+        return newItem;
+    }
+
+    public Item GenerateSpecificItem(string itemSignature)
+    {
+        var itemType = itemSignature.Split(',')[0];
+        var newItem = Instantiate(System.Array.Find(itemPrefabs, ele => ele.name == itemType), tray);
+        newItem.SetItemSignature(itemSignature);
+        // dont activate it yet
+        newItem.gameObject.SetActive(false);
+        return newItem;
+    }
+
+    public void SpawnItem(Item newItem)
+    {
+        newItem.gameObject.SetActive(true);
+        newItem.transform.position = RandomPointInBounds(itemStart.bounds);
         newItem.Spin(1.5f);
 
         newItem.SetSortingLayer("Slot");

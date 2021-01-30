@@ -51,6 +51,14 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
                 // generate a janitor
                 customer.SetCustomerType(true);
                 customer.SetNeededItem(null);
+
+                // generate and give items
+                var items = new Item[itemsToGive];
+                for (int j = 0; j < itemsToGive; j++)
+                {
+                    items[j] = ItemManager.Instance.GenerateRandomItem();
+                }
+                customer.SetHeldItems(items);
                 currJanitors++;
                 customersUntilJanitor = (int) Random.Range(minCustomersBeforeJanitor, maxCustomersBeforeJanitor);
             }
