@@ -10,6 +10,11 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadScene(int sceneIndex)
     {
+        if (Time.timeScale == 0f)
+        {
+            // If paused, need to unpause
+            Time.timeScale = 1f;
+        }
         StartCoroutine("LoadSceneAnimation", sceneIndex);
     }
 
