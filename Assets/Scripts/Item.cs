@@ -83,12 +83,12 @@ public class Item : MonoBehaviour
                                 Destroy(gameObject);
                                 currentSelected = null;
                                 CustomerSpawner.Instance.DespawnCustomer();
-                                break;
                             }
                             else
                             {
                                 Debug.Log("Not mine but can I have it?");
                             }
+                            break;
                         }
 
                         var _drawer = container.parent?.GetComponent<Drawer>();
