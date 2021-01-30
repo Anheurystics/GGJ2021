@@ -79,9 +79,10 @@ public class Item : MonoBehaviour
                             transform.localPosition = pos;
                             
                             drawer = _drawer;
+                            drawer.AddItem(this);
+
                             sprite.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
                             sprite.sortingLayerName = "Drawer";
-                            ItemManager.Instance.BringToTop(this);
                             break;
                         }
                     }
@@ -98,13 +99,17 @@ public class Item : MonoBehaviour
                     {
                         currentSelected = this;
                         collider.enabled = false;
+
                         originalScale = transform.localScale;
                         transform.DOScale(originalScale * 0.4f, 0.2f);
-                        sprite.sortingOrder = 1000;
+                        
                         transform.parent = null;
+                        drawer.RemoveItem(this);
                         drawer = null;
+                        
                         sprite.maskInteraction = SpriteMaskInteraction.None;
                         sprite.sortingLayerName = "Mouse";
+                        sprite.sortingOrder = 1000;
                     }
                 }
             }

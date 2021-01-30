@@ -33,7 +33,10 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
     {
         var customer = Instantiate(customerPrefab, customerRoot);
         customer.Spawn(5);
-        customer.MoveTo(spawnedCustomers.Count);
+        customer.MoveTo(spawnedCustomers.Count, () => {
+            ItemManager.Instance.SpawnItem();
+            Invoke(nameof(DespawnCustomer), 0.5f);
+        });
 
         spawnedCustomers.Insert(0, customer);
     }

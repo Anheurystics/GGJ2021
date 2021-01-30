@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -18,10 +19,12 @@ public class Customer : MonoBehaviour
         sprite.color = spawnColor;
     }
 
-    public void MoveTo(int count, bool postSetLayer = false)
+    public void MoveTo(int count, Action onArrive = null)
     {
         sprite.sortingOrder = -count;
-        transform.DOLocalMove(new Vector3(3 - (1.5f * count), 4.5f - (0.2f * count)), 2f);
+        transform.DOLocalMove(new Vector3(3 - (1.5f * count), 4.5f - (0.2f * count)), 2f).OnComplete(() => {
+            onArrive?.Invoke();
+        });
 
         var spawnColor = Color.white * (1.0f - (count * 0.2f));
         spawnColor.a = 1.0f;
