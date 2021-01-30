@@ -29,18 +29,6 @@ public class Item : MonoBehaviour
         itemDescription = (ItemDescription) GameObject.Find("ItemDescriptionUI").GetComponent(typeof(ItemDescription));
     }
 
-    private bool hover = false;
-
-    void OnMouseEnter()
-    {
-        hover = true;
-    }
-
-    void OnMouseExit()
-    {
-        hover = false;
-    }
-
     void OnMouseDown()
     {
         StartCoroutine("ShowItemDescription");
@@ -108,30 +96,25 @@ public class Item : MonoBehaviour
                 }
             }
         }
-        else
+    }
+
+    public void Pickup()
+    {
+        if(drawer == null || Drawer.opened == drawer)
         {
-            if(hover)
-            {
-                if(Input.GetMouseButtonDown(1))
-                {
-                    if(currentSelected == null && (drawer == null || Drawer.opened == drawer))
-                    {
-                        currentSelected = this;
-                        boxCollider.enabled = false;
+            currentSelected = this;
+            boxCollider.enabled = false;
 
-                        originalScale = transform.localScale;
-                        transform.DOScale(originalScale * 0.4f, 0.2f);
-                        
-                        transform.parent = null;
-                        drawer?.RemoveItem(this);
-                        drawer = null;
+            originalScale = transform.localScale;
+            transform.DOScale(originalScale * 0.4f, 0.2f);
+            
+            transform.parent = null;
+            drawer?.RemoveItem(this);
+            drawer = null;
 
-                        SetMaskInteraction(SpriteMaskInteraction.None);
-                        SetSortingLayer("Mouse");
-                        SetSortingOrder(1000);                        
-                    }
-                }
-            }
+            SetMaskInteraction(SpriteMaskInteraction.None);
+            SetSortingLayer("Mouse");
+            SetSortingOrder(1000);                        
         }
     }
 

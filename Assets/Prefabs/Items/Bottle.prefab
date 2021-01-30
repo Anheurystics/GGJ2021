@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4811695927703949570}
   - component: {fileID: 4811695927703949569}
   - component: {fileID: -1088937195439408471}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdTime: 0.5
-  collider: {fileID: 4811695927703949569}
+  boxCollider: {fileID: 4811695927703949569}
   sortingGroup: {fileID: -1088937195439408471}
   spriteParts:
   - {fileID: 7974723045412170422}

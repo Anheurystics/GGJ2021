@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 7721504921420014636}
   - component: {fileID: 7721504921420014639}
   - component: {fileID: -8616408332560013588}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Umbrella
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdTime: 0.5
-  collider: {fileID: 7721504921420014639}
+  boxCollider: {fileID: 7721504921420014639}
   sortingGroup: {fileID: -8616408332560013588}
   spriteParts:
   - {fileID: 5135564244770529176}

@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3226672134908683619}
   - component: {fileID: 3226672134908683616}
   - component: {fileID: -3702237514672963580}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Book
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdTime: 0.5
-  collider: {fileID: 3226672134908683616}
+  boxCollider: {fileID: 3226672134908683616}
   sortingGroup: {fileID: -3702237514672963580}
   spriteParts:
   - {fileID: 47862421673942743}
