@@ -146,6 +146,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 48822761d1ec3d24394d5f8c9b054ec1, type: 3}
     - {fileID: 21300000, guid: e98aa35829a623846b89209f73a747c5, type: 3}
     - {fileID: 21300000, guid: 64cbde965de699542ad7fa7e4de6c14c, type: 3}
+  sfxPickup: {fileID: 8300000, guid: 605d8f7cbe3cbb34dba33eba5b5effbb, type: 3}
+  sfxPutdown: {fileID: 8300000, guid: f063c7d417d66bd4c914ad8e9dd0e8af, type: 3}
 --- !u!61 &3226672134908683616
 BoxCollider2D:
   m_ObjectHideFlags: 0

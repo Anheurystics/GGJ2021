@@ -18,6 +18,8 @@ public class Customer : MonoBehaviour
 
     private Item _neededItem;
 
+    [SerializeField] private AudioClip sfxArrive;
+
     public void Spawn(int count, bool hasItemToGive)
     {
         sprite.sortingOrder = -count;
@@ -49,6 +51,7 @@ public class Customer : MonoBehaviour
             if (count == 0)
             {
                 OnArrive();
+                AudioManager.Instance.PlaySFX(sfxArrive);
             }
         });
 

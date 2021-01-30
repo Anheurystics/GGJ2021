@@ -144,6 +144,8 @@ MonoBehaviour:
   containerCollider: {fileID: 1203189421569879527}
   itemRootCollider: {fileID: 136281369501566744}
   originalPos: {x: 0, y: 0, z: 0}
+  sfxDrawerOpen: {fileID: 8300000, guid: 113eb0b8e8257f043a5b17d60e885760, type: 3}
+  sfxDrawerClose: {fileID: 8300000, guid: 9c9911fd195963b47bf82b6a374077a7, type: 3}
 --- !u!61 &8523994389394918660
 BoxCollider2D:
   m_ObjectHideFlags: 0

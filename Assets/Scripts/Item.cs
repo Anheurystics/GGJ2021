@@ -20,6 +20,8 @@ public class Item : MonoBehaviour
     [SerializeField] private SortingGroup sortingGroup;
     [SerializeField] private SpriteRenderer[] spriteParts;
     [SerializeField] private SpritePart[] spriteVariants;
+    [SerializeField] private AudioClip sfxPickup;
+    [SerializeField] private AudioClip sfxPutdown;
     private Vector3 originalScale = Vector3.one;
     private Drawer drawer;
     private ItemDescription itemDescription;
@@ -107,6 +109,7 @@ public class Item : MonoBehaviour
                             SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
                             SetSortingLayer("Drawer");
 
+                            AudioManager.Instance.PlaySFX(sfxPutdown);
                             break;
                         }
                     }
@@ -140,6 +143,7 @@ public class Item : MonoBehaviour
             SetSortingLayer("Mouse");
             SetSortingOrder(1000);                        
 
+            AudioManager.Instance.PlaySFX(sfxPickup);
             Debug.Log(itemSignature);
         }
     }

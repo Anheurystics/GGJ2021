@@ -10,6 +10,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
     [SerializeField] private Transform customerRoot;
     [SerializeField] private Customer customerPrefab;
     private List<Customer> spawnedCustomers;
+    [SerializeField] private AudioClip sfxLeave;
 
     void Start()
     {
@@ -58,6 +59,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
             .SetEase(Ease.Linear);
         spawnedCustomers[last].Sprite.sortingOrder = 1000;
         spawnedCustomers.RemoveAt(last);
+        AudioManager.Instance.PlaySFX(sfxLeave, 0.5f);
 
         if(spawnedCustomers.Count > 0)
         {
