@@ -129,6 +129,25 @@ public class Item : MonoBehaviour
         }
     }
 
+    public void Spin(float duration)
+    {
+        StartCoroutine(_Spin(duration));
+    }
+
+    private IEnumerator _Spin(float duration)
+    {
+        var angle = new Vector3(0, 0, UnityEngine.Random.Range(0, 360));
+        transform.eulerAngles = angle;
+        float timer = 0;
+        while(timer < duration)
+        {
+            timer += Time.deltaTime;
+            angle.z += Time.deltaTime * 30;
+            transform.eulerAngles = angle;
+            yield return null;
+        }
+    }
+
     public void SetMaskInteraction(SpriteMaskInteraction interaction)
     {
         foreach(var part in spriteParts)

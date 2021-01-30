@@ -13,6 +13,7 @@ public class ItemManager : MonoSingleton<ItemManager>
         var newItem = Instantiate(itemPrefabs.PickRandom(), tray);
         newItem.transform.position = RandomPointInBounds(itemStart.bounds);
         newItem.Randomize();
+        newItem.Spin(1.5f);
 
         newItem.SetSortingLayer("Slot");
         newItem.SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
