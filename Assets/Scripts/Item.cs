@@ -75,10 +75,18 @@ public class Item : MonoBehaviour
                         var _customer = container.GetComponent<Customer>();
                         if(_customer != null)
                         {
-                            Destroy(gameObject);
-                            currentSelected = null;
-                            CustomerSpawner.Instance.DespawnCustomer();
-                            break;
+                            if (_customer.NeedsThisItem(itemSignature))
+                            {
+                                Debug.Log("Thanks!");
+                                Destroy(gameObject);
+                                currentSelected = null;
+                                CustomerSpawner.Instance.DespawnCustomer();
+                                break;
+                            }
+                            else
+                            {
+                                Debug.Log("Not mine but can I have it?");
+                            }
                         }
 
                         var _drawer = container.parent?.GetComponent<Drawer>();

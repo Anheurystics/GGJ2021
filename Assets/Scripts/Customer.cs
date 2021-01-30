@@ -71,4 +71,9 @@ public class Customer : MonoBehaviour
     {
         CustomerSpawner.Instance.DespawnCustomer();
     }
+
+    public bool NeedsThisItem(string itemSignature)
+    {
+        return itemSignature == _neededItem.itemSignature;
+    }
 }

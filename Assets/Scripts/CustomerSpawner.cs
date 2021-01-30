@@ -27,6 +27,12 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
         {
             SpawnCustomer(false);
         }
+
+        // for debugging a rejection
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            RejectCustomer();
+        }
     }
 
     public void SpawnCustomer(bool hasItem = false)
@@ -60,5 +66,19 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
                 spawnedCustomers[i].MoveTo(spawnedCustomers.Count - 1 - i);
             }
         }
+    }
+
+    public void RejectCustomer()
+    {
+        // Logic for handling a rejection
+        // sana ol
+        if(spawnedCustomers.Count == 0)
+        {
+            return;
+        }
+
+        var _customer = spawnedCustomers[spawnedCustomers.Count - 1];
+        Debug.Log("sad");
+        DespawnCustomer();
     }
 }
