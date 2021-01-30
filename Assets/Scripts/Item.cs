@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -22,6 +23,14 @@ public class Item : MonoBehaviour
     private Vector3 originalScale = Vector3.one;
     private Drawer drawer;
     private ItemDescription itemDescription;
+
+    private int[] _itemSignature;
+    public int[] itemSignature {
+        get { return _itemSignature; }
+    }
+    public string itemName {
+        get { return this.gameObject.name.Split('(', ' ')[0]; }
+    }
     
     void Start()
     {
@@ -121,17 +130,22 @@ public class Item : MonoBehaviour
             SetMaskInteraction(SpriteMaskInteraction.None);
             SetSortingLayer("Mouse");
             SetSortingOrder(1000);                        
+
+            Debug.Log(itemName + "," + string.Join(",", itemSignature));
         }
     }
 
     public void Randomize()
     {
+        _itemSignature = new int[spriteParts.Length];
         for(int i = 0; i < spriteParts.Length; i++)
         {
             var part = spriteParts[i];
             var variants = spriteVariants[i].variants;
 
-            part.sprite = variants.PickRandom();
+            var rand = Random.Range(0, variants.Length);
+            part.sprite = variants[rand];
+            _itemSignature[i] = rand;
         }
     }
 
