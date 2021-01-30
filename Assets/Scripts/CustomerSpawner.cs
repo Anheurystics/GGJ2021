@@ -20,22 +20,25 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
     {
         if(Input.GetKeyDown(KeyCode.S))
         {
-            SpawnCustomer();
+            SpawnCustomer(true);
         }
 
         if(Input.GetKeyDown(KeyCode.D))
         {
-            DespawnCustomer();
+            SpawnCustomer(false);
         }
     }
 
-    public void SpawnCustomer()
+    public void SpawnCustomer(bool hasItem = false)
     {
         var customer = Instantiate(customerPrefab, customerRoot);
         customer.Spawn(5);
         customer.MoveTo(spawnedCustomers.Count, () => {
-            ItemManager.Instance.SpawnItem();
-            Invoke(nameof(DespawnCustomer), 0.5f);
+            if(hasItem)
+            {
+                ItemManager.Instance.SpawnItem();
+                Invoke(nameof(DespawnCustomer), 0.5f);
+            }
         });
 
         spawnedCustomers.Insert(0, customer);

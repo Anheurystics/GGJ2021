@@ -57,12 +57,25 @@ public class Item : MonoBehaviour
 
             if(Input.GetMouseButtonDown(0))
             {
-                RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity, 1 << LayerMask.NameToLayer("ItemRoot"));
+                int layerMask = 0;
+                layerMask |= 1 << LayerMask.NameToLayer("ItemRoot");
+                layerMask |= 1 << LayerMask.NameToLayer("Customer");
+
+                RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(Camera.main.ScreenPointToRay(Input.mousePosition), Mathf.Infinity, layerMask);
                 if(hits.Length > 0)
                 {
                     foreach(var hit in hits)
                     {
                         var container = hit.collider.transform;
+                        var _customer = container.GetComponent<Customer>();
+                        if(_customer != null)
+                        {
+                            Destroy(gameObject);
+                            currentSelected = null;
+                            CustomerSpawner.Instance.DespawnCustomer();
+                            break;
+                        }
+
                         var _drawer = container.parent?.GetComponent<Drawer>();
                         if(_drawer != null)
                         {
