@@ -40,23 +40,28 @@ public class Item : MonoBehaviour
         // Define an object based on an item signature
         // Basically does the opposite of Randomize()
         var signatureParts = signature.Split(',');
-        if (signatureParts[0] != gameObject.name)
+        if (signatureParts[0] != itemName)
         {
-            Debug.LogWarning("Signature and item type do not match");
+            Debug.LogWarning("Signature and item type do not match: " + signatureParts[0] + " vs " + itemName);
         }
-        if (signature.Length - 1 != spriteParts.Length)
+        if (signatureParts.Length - 1 != spriteParts.Length)
         {
-            Debug.LogError("Signature and Parts list do not match.");
+            Debug.LogError("Signature and Parts list do not match: " + (signatureParts.Length - 1) + " vs " + spriteParts.Length);
         }
-        for (int i = 1; i < signatureParts.Length; i++)
+
+        _itemSignature = new int[spriteParts.Length];
+        for (int i = 0; i < signatureParts.Length - 1; i++)
         {
+            // Debug.Log("Parsing part " + i);
             var part = spriteParts[i];
             var variants = spriteVariants[i].variants;
 
             int sp = 0;
-            if (System.Int32.TryParse(signatureParts[i], out sp))
+            if (System.Int32.TryParse(signatureParts[i + 1], out sp))
             {
+                // Debug.Log("Choosing variant " + sp);
                 part.sprite = variants[sp];
+                _itemSignature[i] = sp;
             }
             else
             {

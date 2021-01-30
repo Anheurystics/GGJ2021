@@ -21,6 +21,7 @@ public class ItemManager : MonoSingleton<ItemManager>
     {
         var itemType = itemSignature.Split(',')[0];
         var newItem = Instantiate(System.Array.Find(itemPrefabs, ele => ele.name == itemType), tray);
+        // Debug.Log("Made a new " + newItem);
         newItem.SetItemSignature(itemSignature);
         // dont activate it yet
         newItem.gameObject.SetActive(false);
