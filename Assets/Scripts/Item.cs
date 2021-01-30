@@ -16,7 +16,7 @@ public class Item : MonoBehaviour
 
     public float holdTime = 0.5f;
     
-    [SerializeField] private BoxCollider2D collider;
+    [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private SortingGroup sortingGroup;
     [SerializeField] private SpriteRenderer[] spriteParts;
     [SerializeField] private SpritePart[] spriteVariants;
@@ -88,7 +88,7 @@ public class Item : MonoBehaviour
                         if(_drawer != null)
                         {
                             currentSelected = null;
-                            collider.enabled = true;
+                            boxCollider.enabled = true;
                             transform.DOScale(originalScale, 0.2f);
                             transform.SetParent(container, true);
                             
@@ -117,7 +117,7 @@ public class Item : MonoBehaviour
                     if(currentSelected == null && (drawer == null || Drawer.opened == drawer))
                     {
                         currentSelected = this;
-                        collider.enabled = false;
+                        boxCollider.enabled = false;
 
                         originalScale = transform.localScale;
                         transform.DOScale(originalScale * 0.4f, 0.2f);
