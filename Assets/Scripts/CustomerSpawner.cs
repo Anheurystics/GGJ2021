@@ -10,7 +10,8 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
     public int itemsToGive = 3;
     [SerializeField] private Transform customerRoot;
     [SerializeField] private Customer customerPrefab;
-    [SerializeField] private int customerCount;
+    [SerializeField] private int customerCount = 10;
+    [SerializeField] private Item[] itemPool;
 
     // pre-generated backlog of customers
     private List<Customer> backlogCustomers;
@@ -26,15 +27,13 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
         spawnedCustomers = new List<Customer>();
         backlogCustomers = new List<Customer>();
 
-        // Pre-generate a random list of customers
-        customerCount = 10;
-
         // Define a max number of janitors to serve
         int maxJanitors = (customerCount / itemsToGive) + 1;
         int currJanitors = 0;
 
         // Define a max number of customers before a janitor appears
         int maxCustomersBeforeJanitor = itemsToGive;
+        int minCustomersBeforeJanitor = 1;  // I've been getting a lot of consecutives
         int customersUntilJanitor = 0;
 
         Debug.Log("max " + maxJanitors);
@@ -47,17 +46,28 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
             customer.gameObject.SetActive(false);
 
             // set customer needs and attributes
-            bool hasItem = false;
             if (customersUntilJanitor <= 0 && currJanitors <= maxJanitors)
             {
-                hasItem = true;
+                // generate a janitor
+                customer.SetCustomerType(true);
+                customer.SetNeededItem(null);
                 currJanitors++;
-                customersUntilJanitor = (int) Random.Range(0, maxCustomersBeforeJanitor);
+                customersUntilJanitor = (int) Random.Range(minCustomersBeforeJanitor, maxCustomersBeforeJanitor);
             }
-            customer.SetCustomerType(hasItem);
+            else
+            {
+                // generate a client
+                customer.SetCustomerType(false);
 
+                var _neededItem = Instantiate(itemPool.PickRandom(), customer.transform);
+                _neededItem.gameObject.SetActive(false);  // I just need the item object for the data
+                _neededItem.Randomize();
+                customer.SetNeededItem(_neededItem);
+                customersUntilJanitor--;
+            }
+
+            // Add customer to backlog
             backlogCustomers.Add(customer);
-            customersUntilJanitor--;
         }
     }
 

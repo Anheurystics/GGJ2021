@@ -9,7 +9,6 @@ public class Customer : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
     public SpriteRenderer Sprite => sprite;
 
-    [SerializeField] private Item[] itemPool;
     private bool _hasItem;
     
     public bool hasItem {
@@ -24,15 +23,11 @@ public class Customer : MonoBehaviour
     {
         // Decide on whether they give items or need an item
         _hasItem = hasItemToGive;
+    }
 
-        // If need item, set a needed item
-        _neededItem = null;
-        if (!_hasItem)
-        {
-            _neededItem = Instantiate(itemPool.PickRandom(), transform);
-            _neededItem.gameObject.SetActive(false);  // I just need the item object for the data
-            _neededItem.Randomize();
-        }
+    public void SetNeededItem(Item neededItem = null)
+    {
+        _neededItem = neededItem;
     }
 
     public void Spawn(int count)
