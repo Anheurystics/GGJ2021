@@ -25,11 +25,12 @@ public class Item : MonoBehaviour
     private ItemDescription itemDescription;
 
     private int[] _itemSignature;
-    public int[] itemSignature {
-        get { return _itemSignature; }
-    }
     public string itemName {
         get { return this.gameObject.name.Split('(', ' ')[0]; }
+    }
+
+    public string itemSignature {
+        get { return itemName + "," + string.Join(",", _itemSignature); }
     }
     
     void Start()
@@ -131,7 +132,7 @@ public class Item : MonoBehaviour
             SetSortingLayer("Mouse");
             SetSortingOrder(1000);                        
 
-            Debug.Log(itemName + "," + string.Join(",", itemSignature));
+            Debug.Log(itemSignature);
         }
     }
 

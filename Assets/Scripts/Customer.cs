@@ -9,11 +9,14 @@ public class Customer : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
     public SpriteRenderer Sprite => sprite;
 
+    [SerializeField] private Item[] itemPool;
     private bool _hasItem;
     
     public bool hasItem {
         get { return _hasItem; }
     }
+
+    private Item _neededItem;
 
     public void Spawn(int count, bool hasItemToGive)
     {
@@ -24,7 +27,18 @@ public class Customer : MonoBehaviour
         spawnColor.a = 1.0f;
         sprite.color = spawnColor;
 
+        // Decide on whether they give items or need an item
         _hasItem = hasItemToGive;
+
+        // If need item, set a needed item
+        _neededItem = null;
+        if (!hasItemToGive)
+        {
+            _neededItem = Instantiate(itemPool.PickRandom(), transform);
+            _neededItem.gameObject.SetActive(false);  // I just need the item object for the data
+            _neededItem.Randomize();
+            Debug.Log("needs " + _neededItem.itemSignature);
+        }
     }
 
     public void MoveTo(int count)

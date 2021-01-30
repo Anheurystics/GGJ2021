@@ -97,6 +97,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 274087532874437726}
+  itemPool:
+  - {fileID: 3226672134908683619, guid: e154345c77276064eb1a7d336ebdaf9e, type: 3}
+  - {fileID: 4811695927703949570, guid: da1b9678b4e109d42946fe430014ccd2, type: 3}
+  - {fileID: 8160827215267723685, guid: bf626017180a2a046bf6505af710a8f2, type: 3}
+  - {fileID: 7721504921420014636, guid: dba237618704e594bbc010d6b3184790, type: 3}
 --- !u!61 &6324858514227287798
 BoxCollider2D:
   m_ObjectHideFlags: 0
