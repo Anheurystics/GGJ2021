@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -6,7 +5,7 @@ using UnityEngine.Rendering;
 
 public class Item : MonoBehaviour
 {
-    [Serializable]
+    [System.Serializable]
     public struct SpritePart
     {
         public Sprite[] variants;
@@ -95,6 +94,13 @@ public class Item : MonoBehaviour
                     }
                 }
             }
+
+            if(Input.mouseScrollDelta.y != 0)
+            {
+                var angle = transform.eulerAngles;
+                angle.z += Input.mouseScrollDelta.y * 1800 * Time.deltaTime;
+                transform.eulerAngles = angle;
+            }
         }
     }
 
@@ -136,13 +142,14 @@ public class Item : MonoBehaviour
 
     private IEnumerator _Spin(float duration)
     {
-        var angle = new Vector3(0, 0, UnityEngine.Random.Range(0, 360));
+        var spinDir = Random.Range(-45, 45);
+        var angle = new Vector3(0, 0, Random.Range(0, 360));
         transform.eulerAngles = angle;
         float timer = 0;
         while(timer < duration)
         {
             timer += Time.deltaTime;
-            angle.z += Time.deltaTime * 30;
+            angle.z += Time.deltaTime * spinDir;
             transform.eulerAngles = angle;
             yield return null;
         }
