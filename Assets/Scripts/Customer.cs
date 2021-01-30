@@ -47,7 +47,9 @@ public class Customer : MonoBehaviour
     {
         // Moves a customer to the next spot in the line
         sprite.sortingOrder = -count;
-        transform.DOLocalMove(new Vector3(3 - (1.5f * count), 4.5f - (0.2f * count)), 2f).OnComplete(() => {
+        float xTarget = 3 - (1.5f * count);
+        float yTarget = 4.5f - (0.2f * count);
+        transform.DOLocalMove(new Vector3(xTarget, yTarget), 2f).OnComplete(() => {
             if (count == 0)
             {
                 OnArrive();
