@@ -68,7 +68,7 @@ public class Customer : MonoBehaviour
         if (hasItem)
         {
             ItemManager.Instance.SpawnItem();
-            Invoke(nameof(DespawnCustomer), 0.5f);
+            Invoke(nameof(DespawnCustomer), 0.25f);
         }
     }
 
