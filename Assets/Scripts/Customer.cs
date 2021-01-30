@@ -79,6 +79,6 @@ public class Customer : MonoBehaviour
 
     public bool NeedsThisItem(string itemSignature)
     {
-        return itemSignature == _neededItem.itemSignature;
+        return _neededItem != null && itemSignature == _neededItem.itemSignature;
     }
 }
