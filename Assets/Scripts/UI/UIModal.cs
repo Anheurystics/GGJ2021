@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class UIModal : MonoBehaviour
 {
     public float tweenDuration = 0.2f;
-    public float backgroundAlpha = 0.2f;
+    public float backgroundAlpha = 0.5f;
     private Transform modalPanel;
     private Transform modalBackground;
     private Vector3 destPos;
@@ -18,8 +18,6 @@ public class UIModal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.tweenDuration = 0.2f;
-        this.backgroundAlpha = 0.2f;
         this.modalPanel = transform.Find("UIModalPanel");
         this.modalBackground = transform.Find("UIModalBackground");
         this.modalBackground.gameObject.SetActive(false);
