@@ -32,14 +32,8 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
     public void SpawnCustomer(bool hasItem = false)
     {
         var customer = Instantiate(customerPrefab, customerRoot);
-        customer.Spawn(5);
-        customer.MoveTo(spawnedCustomers.Count, () => {
-            if(hasItem)
-            {
-                ItemManager.Instance.SpawnItem();
-                Invoke(nameof(DespawnCustomer), 0.5f);
-            }
-        });
+        customer.Spawn(5, hasItem);
+        customer.MoveTo(spawnedCustomers.Count);
 
         spawnedCustomers.Insert(0, customer);
     }
