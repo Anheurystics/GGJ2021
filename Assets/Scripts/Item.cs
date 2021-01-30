@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Item : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Item : MonoBehaviour
     public float holdTime = 0.5f;
     
     [SerializeField] private BoxCollider2D collider;
+    [SerializeField] private SortingGroup sortingGroup;
     [SerializeField] private SpriteRenderer[] spriteParts;
     [SerializeField] private SpritePart[] spriteVariants;
     private Vector3 originalScale = Vector3.one;
@@ -140,7 +142,7 @@ public class Item : MonoBehaviour
             var part = spriteParts[i];
             var variants = spriteVariants[i].variants;
 
-            part.sprite = variants[UnityEngine.Random.Range(0, variants.Length)];
+            part.sprite = variants.PickRandom();
         }
     }
 
@@ -154,6 +156,7 @@ public class Item : MonoBehaviour
 
     public void SetSortingLayer(string layerName)
     {
+        sortingGroup.sortingLayerName = layerName;
         foreach(var part in spriteParts)
         {
             part.sortingLayerName = layerName;
@@ -162,6 +165,7 @@ public class Item : MonoBehaviour
 
     public void SetSortingOrder(int order)
     {
+        sortingGroup.sortingOrder = order;
         foreach(var part in spriteParts)
         {
             part.sortingOrder = order;

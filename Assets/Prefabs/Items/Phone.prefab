@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 8160827215267723687}
   - component: {fileID: 8160827215267723685}
   - component: {fileID: 8160827215267723686}
+  - component: {fileID: -3445735300801686332}
   m_Layer: 0
   m_Name: Phone
   m_TagString: Untagged
@@ -212,8 +213,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdTime: 0.5
   collider: {fileID: 8160827215267723686}
-  spriteParts: []
-  spriteVariants: []
+  sortingGroup: {fileID: -3445735300801686332}
+  spriteParts:
+  - {fileID: 6713862868997653009}
+  - {fileID: 8173670569643534786}
+  spriteVariants:
+  - variants:
+    - {fileID: 21300000, guid: 96b4923680651474c8fb00521db87cf0, type: 3}
+    - {fileID: 21300000, guid: 31a27118d471fb34aa5b98e7076abc5a, type: 3}
+    - {fileID: 21300000, guid: 51bda3777afbb00499712834a1504458, type: 3}
+    - {fileID: 21300000, guid: a2087549dc896d24e83bbf508fd1d375, type: 3}
+  - variants:
+    - {fileID: 21300000, guid: ddc5701dc43314d42b69abdb0182a4c1, type: 3}
+    - {fileID: 21300000, guid: 69c11c0e8f4780c4ea035e19875b6b95, type: 3}
+    - {fileID: 21300000, guid: 490efcdaab7afae4bb7af44ca290064d, type: 3}
+    - {fileID: 21300000, guid: ef73bc3f859ddf04f97969ded19d5866, type: 3}
 --- !u!61 &8160827215267723686
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -240,3 +254,14 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.79800224, y: 1.596652}
   m_EdgeRadius: 0
+--- !u!210 &-3445735300801686332
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8160827215267723672}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0

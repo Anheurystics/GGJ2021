@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 3226672134908683617}
   - component: {fileID: 3226672134908683619}
   - component: {fileID: 3226672134908683616}
+  - component: {fileID: -3702237514672963580}
   m_Layer: 0
   m_Name: Book
   m_TagString: Untagged
@@ -130,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdTime: 0.5
   collider: {fileID: 3226672134908683616}
+  sortingGroup: {fileID: -3702237514672963580}
   spriteParts:
   - {fileID: 47862421673942743}
   - {fileID: 3236067474488669444}
@@ -170,6 +172,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.6004896, y: 1.9949794}
   m_EdgeRadius: 0
+--- !u!210 &-3702237514672963580
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226672134908683614}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &8777767627967367412
 GameObject:
   m_ObjectHideFlags: 0

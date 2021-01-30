@@ -47,9 +47,9 @@ TagManager:
   - name: Window
     uniqueID: 173577001
     locked: 0
-  - name: Mouse
-    uniqueID: 4147061261
-    locked: 0
   - name: Slot
     uniqueID: 734102323
+    locked: 0
+  - name: Mouse
+    uniqueID: 4147061261
     locked: 0

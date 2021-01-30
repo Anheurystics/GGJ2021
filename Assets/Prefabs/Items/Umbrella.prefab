@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 7721504921420014638}
   - component: {fileID: 7721504921420014636}
   - component: {fileID: 7721504921420014639}
+  - component: {fileID: -8616408332560013588}
   m_Layer: 0
   m_Name: Umbrella
   m_TagString: Untagged
@@ -212,7 +213,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdTime: 0.5
   collider: {fileID: 7721504921420014639}
-  sprite: {fileID: 0}
+  sortingGroup: {fileID: -8616408332560013588}
+  spriteParts:
+  - {fileID: 5135564244770529176}
+  - {fileID: 7712388927836795979}
+  spriteVariants:
+  - variants:
+    - {fileID: 21300000, guid: d41ffc712868253418a0d413e7e8bb76, type: 3}
+    - {fileID: 21300000, guid: 24ff663ed838f76458bcffc0bd88f6e1, type: 3}
+    - {fileID: 21300000, guid: 35a3d2129feefb94b9dd134384d8b551, type: 3}
+    - {fileID: 21300000, guid: 715e9725a0a866d429984a9bcf350c75, type: 3}
+  - variants:
+    - {fileID: 21300000, guid: 84ed21b7f953b40458ab0ae87dfdbcf9, type: 3}
+    - {fileID: 21300000, guid: 9e9c0bd59c77e0f448791ea00138459f, type: 3}
+    - {fileID: 21300000, guid: 13f1a1ccc7437084e8f5c665471fec2d, type: 3}
+    - {fileID: 21300000, guid: 8c08f59aabad76849aa1e6c8f1399c97, type: 3}
 --- !u!61 &7721504921420014639
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -239,3 +254,14 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.65268946, y: 2.4049635}
   m_EdgeRadius: 0
+--- !u!210 &-8616408332560013588
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7721504921420014609}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0

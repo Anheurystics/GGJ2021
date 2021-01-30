@@ -6,11 +6,11 @@ public class ItemManager : MonoSingleton<ItemManager>
     [SerializeField] private Transform itemStart;
     [SerializeField] private Transform itemEnd;
     [SerializeField] private Transform tray;
-    [SerializeField] private Item itemPrefab;
+    [SerializeField] private Item[] itemPrefabs;
 
     public void SpawnItem()
     {
-        var newItem = Instantiate(itemPrefab, tray);
+        var newItem = Instantiate(itemPrefabs.PickRandom(), tray);
         newItem.transform.localPosition = itemStart.localPosition;
         newItem.Randomize();
 
