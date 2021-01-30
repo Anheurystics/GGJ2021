@@ -77,7 +77,7 @@ public class Customer : MonoBehaviour
     {
         if (hasItem)
         {
-            GiveItems(3);
+            GiveItems(CustomerSpawner.Instance.itemsToGive);
             Invoke(nameof(DespawnCustomer), 0.25f);
             CustomerSpawner.Instance.Bubble.ShowBubble(null);
         }

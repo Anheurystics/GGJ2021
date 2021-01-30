@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class CustomerSpawner : MonoSingleton<CustomerSpawner>
 {
+    public int itemsToGive = 3;
     [SerializeField] private Transform customerRoot;
     [SerializeField] private Customer customerPrefab;
     [SerializeField] private int customerCount;
@@ -27,16 +28,36 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
 
         // Pre-generate a random list of customers
         customerCount = 10;
+
+        // Define a max number of janitors to serve
+        int maxJanitors = (customerCount / itemsToGive) + 1;
+        int currJanitors = 0;
+
+        // Define a max number of customers before a janitor appears
+        int maxCustomersBeforeJanitor = itemsToGive;
+        int customersUntilJanitor = 0;
+
+        Debug.Log("max " + maxJanitors);
+        Debug.Log("max before j " + maxCustomersBeforeJanitor);
+
         for (int i = 0; i < customerCount; i++)
         {
             var customer = Instantiate(customerPrefab, customerRoot);
             // don't spawn them in yet
             customer.gameObject.SetActive(false);
+
             // set customer needs and attributes
-            bool hasItem = Random.Range(0f, 1f) > 0.5;
+            bool hasItem = false;
+            if (customersUntilJanitor <= 0 && currJanitors <= maxJanitors)
+            {
+                hasItem = true;
+                currJanitors++;
+                customersUntilJanitor = (int) Random.Range(0, maxCustomersBeforeJanitor);
+            }
             customer.SetCustomerType(hasItem);
 
             backlogCustomers.Add(customer);
+            customersUntilJanitor--;
         }
     }
 
