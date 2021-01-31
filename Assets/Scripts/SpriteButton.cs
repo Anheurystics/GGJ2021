@@ -7,6 +7,7 @@ public class SpriteButton : MonoBehaviour
     [SerializeField] private Sprite upButton;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private UnityEvent onClick;
+    [SerializeField] private AudioClip sfxPress;
     
     void OnMouseDown()
     {
@@ -21,6 +22,7 @@ public class SpriteButton : MonoBehaviour
     void OnMouseUpAsButton()
     {
         sprite.sprite = upButton;
+        AudioManager.Instance.PlaySFX(sfxPress);
         onClick?.Invoke();
     }
 }
