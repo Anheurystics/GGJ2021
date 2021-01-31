@@ -24,6 +24,7 @@ public class GameManager : MonoSingleton<GameManager>
     private GameObject endGameModal;
     private GameObject readySign;
     private GameObject startSign;
+    private GameObject doneSign;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +38,7 @@ public class GameManager : MonoSingleton<GameManager>
         endGameModal = GameObject.Find("EndGameModal");
         readySign = GameObject.Find("ReadySign");
         startSign = GameObject.Find("StartSign");
+        doneSign = GameObject.Find("DoneSign");
 
         StartCoroutine(nameof(ShowReadyStartSigns));
     }
@@ -67,6 +69,19 @@ public class GameManager : MonoSingleton<GameManager>
             clockUI.transform.Find("TimeRemaining").GetComponent<Text>().text = gameClock.ToString();
         }
         Debug.Log("Done!");
+        StartCoroutine(nameof(TimesUp));
+    }
+
+    IEnumerator TimesUp()
+    {
+        for (int i = 0; i < CustomerSpawner.Instance.queueSize; i++)
+        {
+            CustomerSpawner.Instance.DespawnCustomer();
+        }
+        var modalObj = doneSign.GetComponent<UIModal>();
+        modalObj.ShowModal();
+        yield return new WaitForSeconds(1.5f);
+        modalObj.HideModal();
         EndGame();
     }
 
