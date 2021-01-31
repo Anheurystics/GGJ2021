@@ -148,6 +148,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: fd45c2fbc412f2d4ea36d0bc21732621, type: 3}
   sfxPickup: {fileID: 8300000, guid: 605d8f7cbe3cbb34dba33eba5b5effbb, type: 3}
   sfxPutdown: {fileID: 8300000, guid: f063c7d417d66bd4c914ad8e9dd0e8af, type: 3}
+  itemName: Bottle
 --- !u!61 &4811695927703949569
 BoxCollider2D:
   m_ObjectHideFlags: 0
