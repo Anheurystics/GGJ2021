@@ -4635,7 +4635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6ae42209c44cc4ea1a33b11d27ae52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameDuration: 10
+  gameDuration: 300
   gameClock: 0
   correctDecision: 50
   flawlessBonus: 100
