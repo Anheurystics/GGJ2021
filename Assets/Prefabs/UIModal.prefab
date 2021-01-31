@@ -191,6 +191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tweenDuration: 0.2
   backgroundAlpha: 0.5
+  modalPanel: {fileID: 5467423214122321875}
+  modalBackground: {fileID: 5467423215072614767}
 --- !u!1 &5467423215072614766
 GameObject:
   m_ObjectHideFlags: 0
