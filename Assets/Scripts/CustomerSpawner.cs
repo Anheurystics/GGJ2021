@@ -17,6 +17,12 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
     private List<Customer> backlogCustomers;
     // currently shown queue of customers
     private List<Customer> spawnedCustomers;
+    public int queueSize {
+        get { return spawnedCustomers.Count; }
+    }
+    public int currentlyServing {
+        get { return spawnedCustomers[spawnedCustomers.Count - 1].customerId; }
+    }
     [SerializeField] private AudioClip sfxLeave;
     [SerializeField] private Bubble bubble;
     public Bubble Bubble => bubble;
@@ -188,6 +194,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
                 spawnedCustomers[i].MoveTo(spawnedCustomers.Count - 1 - i);
             }
         }
+        Debug.Log("The queue: " + string.Join(",", spawnedCustomers.Select(c => c.customerId)));
     }
 
     public void RejectCustomer()

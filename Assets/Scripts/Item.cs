@@ -115,6 +115,12 @@ public class Item : MonoBehaviour
                         var _customer = container.GetComponent<Customer>();
                         if(_customer != null)
                         {
+                            Debug.Log("Raycasted customer " + _customer.customerId);
+                            if (_customer.customerId != CustomerSpawner.Instance.currentlyServing)
+                            {
+                                // Customer is not the one you're serving right now, move on
+                                continue;
+                            }
                             if (_customer.NeedsThisItem(itemSignature))
                             {
                                 Debug.Log("Thanks!");

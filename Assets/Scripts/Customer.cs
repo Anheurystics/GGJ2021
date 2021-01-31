@@ -9,6 +9,10 @@ public class Customer : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
     public SpriteRenderer Sprite => sprite;
 
+    public int customerId {
+        get { return GetInstanceID(); }
+    }
+
     private bool _hasItem;
     
     public bool hasItem {
@@ -106,6 +110,14 @@ public class Customer : MonoBehaviour
 
     public bool NeedsThisItem(string itemSignature)
     {
+        if (_neededItem != null)
+        {
+            Debug.Log("Comparing " + itemSignature + " vs " + _neededItem.itemSignature);
+        }
+        else
+        {
+            Debug.Log("Cant compare; needed item be null");
+        }
         return _neededItem != null && itemSignature == _neededItem.itemSignature;
     }
 }
