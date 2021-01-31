@@ -6,10 +6,16 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GameObject sceneLoader;
+    void Start()
+    {
+        AudioManager.Instance.PlayBGMMenu();
+    }
+
     public void PlayGame()
     {
         SceneLoader sl = sceneLoader.GetComponent<SceneLoader>();
         sl.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        AudioManager.Instance.PlayBGMGame();
     }
 
     public void ExitGame()
