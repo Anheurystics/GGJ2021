@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         AudioManager.Instance.PlayBGMMenu();
+        Cursor.visible = true;
     }
 
     public void PlayGame()

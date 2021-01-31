@@ -35,6 +35,7 @@ public class PauseScreen : MonoBehaviour
         pauseModal.ShowModal();
         // Need to let the animation play before pausing
         Invoke(nameof(PauseAfterAnimation), pauseModal.tweenDuration);
+        Cursor.visible = true;
     }
 
     private void PauseAfterAnimation()
@@ -48,5 +49,6 @@ public class PauseScreen : MonoBehaviour
         Time.timeScale = 1f;
         isPaused = false;
         pauseModal.HideModal();
+        Cursor.visible = false;
     }
 }
