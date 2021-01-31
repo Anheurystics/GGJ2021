@@ -8,9 +8,11 @@ using UnityEngine;
 public class CustomerSpawner : MonoSingleton<CustomerSpawner>
 {
     public int itemsToGive = 3;
+    public float probabilityFound = 0.75f;
     [SerializeField] private Transform customerRoot;
     [SerializeField] private Customer customerPrefab;
-    [SerializeField] private int customerCount = 10;
+    [SerializeField] private int customerBufferCount = 10;
+    [SerializeField] private int backlogLowerLimit = 4;
     [SerializeField] private Item[] itemPool;
 
     // pre-generated backlog of customers
@@ -30,6 +32,13 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
     // sets
     private HashSet<string> lostSet;
     private HashSet<string> foundSet;
+    public HashSet<string> heldSet;
+
+    // for generating the backlog
+    private int maxCustomersBeforeJanitor;
+    private int minCustomersBeforeJanitor;
+    private int customersUntilJanitor;
+
     void Start()
     {
         // Instantiate variables
@@ -37,51 +46,15 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
         backlogCustomers = new List<Customer>();
         lostSet = new HashSet<string>();
         foundSet = new HashSet<string>();
-
-        // Define a max number of janitors to serve
-        int maxJanitors = (customerCount / itemsToGive) + 1;
-        int currJanitors = 0;
+        heldSet = new HashSet<string>();
 
         // Define a max number of customers before a janitor appears
-        int maxCustomersBeforeJanitor = itemsToGive;
-        int minCustomersBeforeJanitor = 1;  // I've been getting a lot of consecutives
-        int customersUntilJanitor = 0;
+        maxCustomersBeforeJanitor = itemsToGive;
+        minCustomersBeforeJanitor = 1;  // I've been getting a lot of consecutives
+        customersUntilJanitor = 0;
 
-        Debug.Log("max " + maxJanitors);
         Debug.Log("max before j " + maxCustomersBeforeJanitor);
-
-        for (int i = 0; i < customerCount; i++)
-        {
-            var customer = Instantiate(customerPrefab, customerRoot);
-            // don't spawn them in yet
-            customer.gameObject.SetActive(false);
-
-            // set customer needs and attributes
-            if (customersUntilJanitor <= 0 && currJanitors <= maxJanitors)
-            {
-                // generate a janitor
-                customer.SetCustomerType(true);
-                customer.SetNeededItem(null);
-
-                // generate and give items
-                var items = GenerateHeldItems();
-                customer.SetHeldItems(items);
-                currJanitors++;
-                customersUntilJanitor = (int) Random.Range(minCustomersBeforeJanitor, maxCustomersBeforeJanitor);
-            }
-            else
-            {
-                // generate a client
-                customer.SetCustomerType(false);
-
-                var _neededItem = GenerateNeededItem(customer.transform, 0.75f);
-                customer.SetNeededItem(_neededItem);
-                customersUntilJanitor--;
-            }
-
-            // Add customer to backlog
-            backlogCustomers.Add(customer);
-        }
+        GenerateBacklog();
     }
 
     void Update()
@@ -100,6 +73,41 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
         if(Input.GetKeyDown(KeyCode.R))
         {
             RejectCustomer();
+        }
+    }
+
+    private void GenerateBacklog()
+    {
+        for (int i = 0; i < customerBufferCount; i++)
+        {
+            var customer = Instantiate(customerPrefab, customerRoot);
+            // don't spawn them in yet
+            customer.gameObject.SetActive(false);
+
+            // set customer needs and attributes
+            if (customersUntilJanitor <= 0)
+            {
+                // generate a janitor
+                customer.SetCustomerType(true);
+                customer.SetNeededItem(null);
+
+                // generate and give items
+                var items = GenerateHeldItems();
+                customer.SetHeldItems(items);
+                customersUntilJanitor = (int) Random.Range(minCustomersBeforeJanitor, maxCustomersBeforeJanitor);
+            }
+            else
+            {
+                // generate a client
+                customer.SetCustomerType(false);
+
+                var _neededItem = GenerateNeededItem(customer.transform, probabilityFound);
+                customer.SetNeededItem(_neededItem);
+                customersUntilJanitor--;
+            }
+
+            // Add customer to backlog
+            backlogCustomers.Add(customer);
         }
     }
 
@@ -196,6 +204,13 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
             }
         }
         Debug.Log("The queue: " + string.Join(",", spawnedCustomers.Select(c => c.customerId)));
+
+        // Generate more bacclog if the queue is less than the limit
+        if (backlogCustomers.Count < backlogLowerLimit)
+        {
+            GenerateBacklog();
+            Debug.Log("Generating more customers... Right now: " + (spawnedCustomers.Count + backlogCustomers.Count));
+        }
     }
 
     public void NextCharacteristic()
@@ -214,6 +229,18 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
 
         var _customer = spawnedCustomers[spawnedCustomers.Count - 1];
         Debug.Log("sad");
+
+        // Check if rejecting them was the right thing to do
+        // :(
+        var _sig = _customer.neededItemSignature;
+        var _correct = true;
+        if (CustomerSpawner.Instance.heldSet.Contains(_sig))
+        {
+            // you had it all along...
+            Debug.Log("Withheld lost item...");
+            _correct = false;
+        }
+        GameManager.Instance.AddCustomerResolved(_correct);
         DespawnCustomer();
     }
 }

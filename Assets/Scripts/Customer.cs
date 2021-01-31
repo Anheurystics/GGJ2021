@@ -20,6 +20,9 @@ public class Customer : MonoBehaviour
     }
 
     private Item _neededItem;
+    public string neededItemSignature {
+        get { return _neededItem.itemSignature; }
+    }
 
     public Item[] heldItems;
 

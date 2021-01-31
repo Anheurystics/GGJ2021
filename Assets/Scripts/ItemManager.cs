@@ -38,6 +38,8 @@ public class ItemManager : MonoSingleton<ItemManager>
         newItem.SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
 
         newItem.transform.DOMove(RandomPointInBounds(itemEnd.bounds), 1.5f);
+
+        CustomerSpawner.Instance.heldSet.Add(newItem.itemSignature);
     }
 
     private Vector3 RandomPointInBounds(Bounds bounds)
