@@ -1414,6 +1414,7 @@ MonoBehaviour:
   - {fileID: 8160827215267723685, guid: bf626017180a2a046bf6505af710a8f2, type: 3}
   - {fileID: 7721504921420014636, guid: dba237618704e594bbc010d6b3184790, type: 3}
   sfxLeave: {fileID: 8300000, guid: 33f3b3819ed13e142bf86e0f25cbafb1, type: 3}
+  sfxReject: {fileID: 8300000, guid: 9f92a532f40adbd49bd7a8a9f8b6af3b, type: 3}
   bubble: {fileID: 254606338}
 --- !u!82 &519420034
 AudioSource:

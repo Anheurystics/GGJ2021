@@ -26,6 +26,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
         get { return spawnedCustomers[spawnedCustomers.Count - 1].customerId; }
     }
     [SerializeField] private AudioClip sfxLeave;
+    [SerializeField] private AudioClip sfxReject;
     [SerializeField] private Bubble bubble;
     public Bubble Bubble => bubble;
 
@@ -237,6 +238,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
             return;
         }
 
+        AudioManager.Instance.PlaySFX(sfxReject);
         var _customer = spawnedCustomers[spawnedCustomers.Count - 1];
         Debug.Log("sad");
 

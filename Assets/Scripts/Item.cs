@@ -24,7 +24,6 @@ public class Item : MonoBehaviour
     [SerializeField] private AudioClip sfxPutdown;
     private Vector3 originalScale = Vector3.one;
     private Drawer drawer;
-    private ItemDescription itemDescription;
 
     public int[] _itemSignature;
     public string itemName;
@@ -68,7 +67,6 @@ public class Item : MonoBehaviour
 
     void Start()
     {
-        itemDescription = (ItemDescription) GameObject.Find("ItemDescriptionUI").GetComponent(typeof(ItemDescription));
         originalScale = transform.localScale;
     }
 
