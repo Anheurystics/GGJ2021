@@ -123,7 +123,7 @@ public class Item : MonoBehaviour
                             {
                                 // You gave the right item
                                 Debug.Log("Thanks!");
-                                ScoreManager.Instance.AddCustomerResolved(true);
+                                GameManager.Instance.AddCustomerResolved(true);
                                 CustomerSpawner.Instance.heldSet.Remove(itemSignature);
                                 Destroy(gameObject);
                                 currentSelected = null;
@@ -132,7 +132,7 @@ public class Item : MonoBehaviour
                             else
                             {
                                 Debug.Log("Not mine but can I have it?");
-                                ScoreManager.Instance.AddWrongItemGiven();
+                                GameManager.Instance.AddWrongItemGiven();
                             }
                             break;
                         }

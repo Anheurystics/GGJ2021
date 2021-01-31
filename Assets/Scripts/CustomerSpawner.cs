@@ -240,7 +240,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
             Debug.Log("Withheld lost item...");
             _correct = false;
         }
-        ScoreManager.Instance.AddCustomerResolved(_correct);
+        GameManager.Instance.AddCustomerResolved(_correct);
         DespawnCustomer();
     }
 }

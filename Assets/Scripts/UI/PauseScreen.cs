@@ -30,7 +30,7 @@ public class PauseScreen : MonoBehaviour
     public void Pause()
     {
         // just for debugging score
-        Debug.Log("Score: " + ScoreManager.Instance.score);
+        Debug.Log("Score: " + GameManager.Instance.score);
         Debug.Log("going...will pause");
         pauseModal.ShowModal();
         // Need to let the animation play before pausing

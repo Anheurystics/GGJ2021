@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ScoreManager : MonoSingleton<ScoreManager>
+public class GameManager : MonoSingleton<GameManager>
 {
     private int _score;
     private bool flawless;
@@ -12,10 +13,14 @@ public class ScoreManager : MonoSingleton<ScoreManager>
     }
 
     // Modify these to determine penalties and bonuses
+    public int gameDuration = 300;  // 5 minutes
+    public int gameClock;
     public int correctDecision = 50;
     public int flawlessBonus = 100;
     public int wrongRejection = -10;
     public int wrongOffer = -0;
+
+    private GameObject clockUI;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +28,21 @@ public class ScoreManager : MonoSingleton<ScoreManager>
         _score = 0;
         flawless = true;
         final_score = false;
+        gameClock = gameDuration;
+
+        clockUI = GameObject.Find("Clock");
+        StartCoroutine(nameof(DecrementClock));
+    }
+
+    IEnumerator DecrementClock()
+    {
+        while (gameClock > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            gameClock--;
+            clockUI.transform.Find("TimeRemaining").GetComponent<Text>().text = gameClock.ToString();
+
+        }
     }
 
     public void AddCustomerResolved(bool correct)
