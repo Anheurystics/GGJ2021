@@ -35,6 +35,41 @@ public class Item : MonoBehaviour
         get { return itemName + "," + string.Join(",", _itemSignature); }
     }
     
+    public void SetItemSignature(string signature)
+    {
+        // Define an object based on an item signature
+        // Basically does the opposite of Randomize()
+        var signatureParts = signature.Split(',');
+        if (signatureParts[0] != itemName)
+        {
+            Debug.LogWarning("Signature and item type do not match: " + signatureParts[0] + " vs " + itemName);
+        }
+        if (signatureParts.Length - 1 != spriteParts.Length)
+        {
+            Debug.LogError("Signature and Parts list do not match: " + (signatureParts.Length - 1) + " vs " + spriteParts.Length);
+        }
+
+        _itemSignature = new int[spriteParts.Length];
+        for (int i = 0; i < signatureParts.Length - 1; i++)
+        {
+            // Debug.Log("Parsing part " + i);
+            var part = spriteParts[i];
+            var variants = spriteVariants[i].variants;
+
+            int sp = 0;
+            if (System.Int32.TryParse(signatureParts[i + 1], out sp))
+            {
+                // Debug.Log("Choosing variant " + sp);
+                part.sprite = variants[sp];
+                _itemSignature[i] = sp;
+            }
+            else
+            {
+                Debug.LogError("Could not parse signature");
+            }
+        }
+    }
+
     void Start()
     {
         itemDescription = (ItemDescription) GameObject.Find("ItemDescriptionUI").GetComponent(typeof(ItemDescription));

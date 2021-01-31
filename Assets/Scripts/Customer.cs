@@ -9,7 +9,6 @@ public class Customer : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
     public SpriteRenderer Sprite => sprite;
 
-    [SerializeField] private Item[] itemPool;
     private bool _hasItem;
     
     public bool hasItem {
@@ -18,21 +17,24 @@ public class Customer : MonoBehaviour
 
     private Item _neededItem;
 
+    public Item[] heldItems;
+
     [SerializeField] private AudioClip sfxArrive;
 
     public void SetCustomerType(bool hasItemToGive)
     {
         // Decide on whether they give items or need an item
         _hasItem = hasItemToGive;
+    }
 
-        // If need item, set a needed item
-        _neededItem = null;
-        if (!_hasItem)
-        {
-            _neededItem = Instantiate(itemPool.PickRandom(), transform);
-            _neededItem.gameObject.SetActive(false);  // I just need the item object for the data
-            _neededItem.Randomize();
-        }
+    public void SetNeededItem(Item neededItem = null)
+    {
+        _neededItem = neededItem;
+    }
+
+    public void SetHeldItems(Item[] held = null)
+    {
+        heldItems = held;
     }
 
     public void Spawn(int count)
@@ -77,7 +79,7 @@ public class Customer : MonoBehaviour
     {
         if (hasItem)
         {
-            GiveItems(CustomerSpawner.Instance.itemsToGive);
+            GiveItems();
             Invoke(nameof(DespawnCustomer), 0.25f);
             CustomerSpawner.Instance.Bubble.ShowBubble(null);
         }
@@ -87,11 +89,12 @@ public class Customer : MonoBehaviour
         }
     }
 
-    private void GiveItems(int n)
+    private void GiveItems()
     {
-        for (int i = 0; i < n; i++)
+        // should not be called if user isn't janitor
+        for (int i = 0; i < heldItems.Length; i++)
         {
-            ItemManager.Instance.SpawnItem();
+            ItemManager.Instance.SpawnItem(heldItems[i]);
         }
     }
 
