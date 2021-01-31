@@ -84,7 +84,7 @@ public class Item : MonoBehaviour
     void OnMouseUp()
     {
         StopCoroutine("ShowItemDescription");
-        this.itemDescription.HideItemDescription();
+        PreviewManager.Instance.HidePreview();
     }
 
     void Update()
@@ -256,6 +256,6 @@ public class Item : MonoBehaviour
     IEnumerator ShowItemDescription()
     {
         yield return new WaitForSeconds(this.holdTime);
-        this.itemDescription.ShowItemDescription();
+        PreviewManager.Instance.ShowPreview(this);
     }
 }
