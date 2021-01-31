@@ -198,6 +198,11 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
         Debug.Log("The queue: " + string.Join(",", spawnedCustomers.Select(c => c.customerId)));
     }
 
+    public void NextCharacteristic()
+    {
+        Bubble.ShowCharacteristic();
+    }
+
     public void RejectCustomer()
     {
         // Logic for handling a rejection
