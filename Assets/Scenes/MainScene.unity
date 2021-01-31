@@ -1142,6 +1142,7 @@ GameObject:
   - component: {fileID: 519420035}
   - component: {fileID: 519420034}
   - component: {fileID: 519420036}
+  - component: {fileID: 519420037}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1247,9 +1248,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsToGive: 3
+  probabilityFound: 0.75
   customerRoot: {fileID: 1488780707}
   customerPrefab: {fileID: 274087532874437721, guid: e5ac1d1cbf83fec4590b548c1cafbeb9, type: 3}
-  customerCount: 10
+  customerBufferCount: 10
+  backlogLowerLimit: 4
   itemPool:
   - {fileID: 3226672134908683619, guid: e154345c77276064eb1a7d336ebdaf9e, type: 3}
   - {fileID: 4811695927703949570, guid: da1b9678b4e109d42946fe430014ccd2, type: 3}
@@ -1463,6 +1466,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &519420037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa6ae42209c44cc4ea1a33b11d27ae52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  correctDecision: 50
+  flawlessBonus: 100
+  wrongRejection: -10
+  wrongOffer: 0
 --- !u!1 &525006232
 GameObject:
   m_ObjectHideFlags: 0

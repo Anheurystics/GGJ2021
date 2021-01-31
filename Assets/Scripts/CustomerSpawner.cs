@@ -8,6 +8,7 @@ using UnityEngine;
 public class CustomerSpawner : MonoSingleton<CustomerSpawner>
 {
     public int itemsToGive = 3;
+    public float probabilityFound = 0.75f;
     [SerializeField] private Transform customerRoot;
     [SerializeField] private Customer customerPrefab;
     [SerializeField] private int customerBufferCount = 10;
@@ -31,6 +32,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
     // sets
     private HashSet<string> lostSet;
     private HashSet<string> foundSet;
+    public HashSet<string> heldSet;
 
     // for generating the backlog
     private int maxCustomersBeforeJanitor;
@@ -44,6 +46,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
         backlogCustomers = new List<Customer>();
         lostSet = new HashSet<string>();
         foundSet = new HashSet<string>();
+        heldSet = new HashSet<string>();
 
         // Define a max number of customers before a janitor appears
         maxCustomersBeforeJanitor = itemsToGive;
@@ -98,7 +101,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
                 // generate a client
                 customer.SetCustomerType(false);
 
-                var _neededItem = GenerateNeededItem(customer.transform, 0.75f);
+                var _neededItem = GenerateNeededItem(customer.transform, probabilityFound);
                 customer.SetNeededItem(_neededItem);
                 customersUntilJanitor--;
             }
@@ -226,6 +229,18 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
 
         var _customer = spawnedCustomers[spawnedCustomers.Count - 1];
         Debug.Log("sad");
+
+        // Check if rejecting them was the right thing to do
+        // :(
+        var _sig = _customer.neededItemSignature;
+        var _correct = true;
+        if (CustomerSpawner.Instance.heldSet.Contains(_sig))
+        {
+            // you had it all along...
+            Debug.Log("Withheld lost item...");
+            _correct = false;
+        }
+        ScoreManager.Instance.AddCustomerResolved(_correct);
         DespawnCustomer();
     }
 }
