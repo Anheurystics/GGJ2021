@@ -180,6 +180,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
 
         var sequence = DOTween.Sequence();
         var last = spawnedCustomers.Count - 1;
+        CustomerSpawner.Instance.Bubble.HideBubble();
         spawnedCustomers[last].transform
             .DOLocalMoveX(10f, 2f)
             .SetEase(Ease.Linear);

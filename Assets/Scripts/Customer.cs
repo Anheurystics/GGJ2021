@@ -105,7 +105,6 @@ public class Customer : MonoBehaviour
     private void DespawnCustomer()
     {
         CustomerSpawner.Instance.DespawnCustomer();
-        CustomerSpawner.Instance.Bubble.HideBubble();
     }
 
     public bool NeedsThisItem(string itemSignature)
