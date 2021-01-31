@@ -34,6 +34,8 @@ public class Item : MonoBehaviour
     public string itemSignature {
         get { return itemName + "," + string.Join(",", _itemSignature); }
     }
+
+    private float shrinkScale = 0.4f;
     
     public void SetItemSignature(string signature)
     {
@@ -73,6 +75,7 @@ public class Item : MonoBehaviour
     void Start()
     {
         itemDescription = (ItemDescription) GameObject.Find("ItemDescriptionUI").GetComponent(typeof(ItemDescription));
+        originalScale = transform.localScale;
     }
 
     void OnMouseDown()
@@ -131,6 +134,8 @@ public class Item : MonoBehaviour
                         {
                             currentSelected = null;
                             boxCollider.enabled = true;
+                            transform.DOKill();
+                            transform.localScale = originalScale * shrinkScale;
                             transform.DOScale(originalScale, 0.2f);
                             transform.SetParent(container, true);
                             
@@ -167,8 +172,9 @@ public class Item : MonoBehaviour
             currentSelected = this;
             boxCollider.enabled = false;
 
-            originalScale = transform.localScale;
-            transform.DOScale(originalScale * 0.4f, 0.2f);
+            transform.DOKill();
+            transform.localScale = originalScale;
+            transform.DOScale(originalScale * shrinkScale, 0.2f);
             
             transform.parent = null;
             drawer?.RemoveItem(this);
