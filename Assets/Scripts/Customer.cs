@@ -7,6 +7,8 @@ using UnityEngine;
 public class Customer : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Sprite[] variants;
+    [SerializeField] private Sprite janitor;
     public SpriteRenderer Sprite => sprite;
 
     public int customerId {
@@ -32,6 +34,15 @@ public class Customer : MonoBehaviour
     {
         // Decide on whether they give items or need an item
         _hasItem = hasItemToGive;
+        
+        if(_hasItem)
+        {
+            sprite.sprite = janitor;
+        }
+        else
+        {
+            sprite.sprite = variants.PickRandom();
+        }
     }
 
     public void SetNeededItem(Item neededItem = null)
