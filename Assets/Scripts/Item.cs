@@ -26,7 +26,7 @@ public class Item : MonoBehaviour
     private Drawer drawer;
     private ItemDescription itemDescription;
 
-    private int[] _itemSignature;
+    public int[] _itemSignature;
     public string itemName;
 
     public string itemSignature {

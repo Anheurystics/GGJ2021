@@ -146,6 +146,8 @@ MonoBehaviour:
   itemType: {fileID: 1240512433914332474}
   mainColor: {fileID: 1240512432519378788}
   subColor: {fileID: 1240512432148228551}
+  damage: {fileID: 1240512432662405005}
+  sticker: {fileID: 1240512432997472013}
   requirementsRoot: {fileID: 1240512432859805559}
   dropSprite: {fileID: 1240512431996276456}
   damageSprite: {fileID: 21300000, guid: 82d74822f9010f947b7111f15f25d70a, type: 3}
