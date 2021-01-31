@@ -14,8 +14,8 @@ public class Pointer : MonoBehaviour
     void Update()
     {
         var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // pos.x += 0.25f;
-        // pos.y += -0.25f;
+        pos.x += 0.5f;
+        pos.y += -0.5f;
         pos.z = 10;
 
         transform.position = pos;
