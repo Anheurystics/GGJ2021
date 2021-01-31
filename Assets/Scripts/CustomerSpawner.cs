@@ -9,6 +9,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
 {
     public int itemsToGive = 3;
     public float probabilityFound = 0.75f;
+    private bool gameIsLive = false;
     [SerializeField] private Transform customerRoot;
     [SerializeField] private Customer customerPrefab;
     [SerializeField] private int customerBufferCount = 10;
@@ -62,13 +63,16 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
     float spawnDuration = 0f;
     void Update()
     {
-        spawnTimer += Time.deltaTime;
-        if(spawnTimer >= spawnDuration)
+        if (gameIsLive)
         {
-            spawnTimer = 0f;
-            spawnDuration = Random.Range(5, 12);
-            
-            SpawnCustomer();
+            spawnTimer += Time.deltaTime;
+            if(spawnTimer >= spawnDuration)
+            {
+                spawnTimer = 0f;
+                spawnDuration = Random.Range(5, 12);
+                
+                SpawnCustomer();
+            }
         }
         // if(Input.GetKeyDown(KeyCode.S))
         // {
@@ -85,6 +89,11 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
         // {
         //     RejectCustomer();
         // }
+    }
+
+    public void StartSpawner()
+    {
+        gameIsLive = true;
     }
 
     private void GenerateBacklog()
