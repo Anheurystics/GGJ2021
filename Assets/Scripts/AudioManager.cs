@@ -10,7 +10,6 @@ public class AudioManager : MonoSingleton<AudioManager>
 
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
     }
 
     public void PlaySFX(AudioClip clip, float delay = 0)

@@ -34,6 +34,8 @@ public class GameManager : MonoSingleton<GameManager>
         clockUI = GameObject.Find("Clock");
         endGameModal = GameObject.Find("EndGameModal");
         StartCoroutine(nameof(DecrementClock));
+
+        AudioManager.Instance.PlayBGMGame();
     }
 
     IEnumerator DecrementClock()

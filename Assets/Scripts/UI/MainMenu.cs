@@ -16,7 +16,6 @@ public class MainMenu : MonoBehaviour
     {
         SceneLoader sl = sceneLoader.GetComponent<SceneLoader>();
         sl.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        AudioManager.Instance.PlayBGMGame();
     }
 
     public void ExitGame()
