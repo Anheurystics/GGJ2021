@@ -44,23 +44,19 @@ public class Item : MonoBehaviour
         {
             Debug.LogWarning("Signature and item type do not match: " + signatureParts[0] + " vs " + itemName);
         }
-        if (signatureParts.Length - 1 != spriteParts.Length)
-        {
-            Debug.LogError("Signature and Parts list do not match: " + (signatureParts.Length - 1) + " vs " + spriteParts.Length);
-        }
 
-        _itemSignature = new int[spriteParts.Length];
+        _itemSignature = new int[spriteParts.Length + 2];
         for (int i = 0; i < signatureParts.Length - 1; i++)
         {
-            // Debug.Log("Parsing part " + i);
-            var part = spriteParts[i];
-            var variants = spriteVariants[i].variants;
-
             int sp = 0;
             if (System.Int32.TryParse(signatureParts[i + 1], out sp))
             {
-                // Debug.Log("Choosing variant " + sp);
-                part.sprite = variants[sp];
+                if(i < spriteParts.Length)
+                {
+                    var part = spriteParts[i];
+                    var variants = spriteVariants[i].variants;
+                    part.sprite = variants[sp];
+                }
                 _itemSignature[i] = sp;
             }
             else
@@ -199,7 +195,7 @@ public class Item : MonoBehaviour
 
     public void Randomize()
     {
-        _itemSignature = new int[spriteParts.Length];
+        _itemSignature = new int[spriteParts.Length + 2];
         for(int i = 0; i < spriteParts.Length; i++)
         {
             var part = spriteParts[i];
@@ -209,6 +205,9 @@ public class Item : MonoBehaviour
             part.sprite = variants[rand];
             _itemSignature[i] = rand;
         }
+
+        _itemSignature[spriteParts.Length] = Random.Range(0, 2);
+        _itemSignature[spriteParts.Length + 1] = Random.Range(0, 2);
     }
 
     public void Spin(float duration)

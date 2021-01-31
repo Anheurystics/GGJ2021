@@ -18,7 +18,7 @@ public class Preview : MonoBehaviour
             spriteParts[i].sprite = spriteVariants[i].variants[sig[i]];
         }
 
-        damagePart.gameObject.SetActive(false);
-        stickerPart.gameObject.SetActive(false);
+        damagePart.gameObject.SetActive(sig[2] == 1);
+        stickerPart.gameObject.SetActive(sig[3] == 1);
     }
 }
