@@ -57,23 +57,33 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
         GenerateBacklog();
     }
 
+    float spawnTimer = 0;
+    float spawnDuration = 0f;
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.S))
+        spawnTimer += Time.deltaTime;
+        if(spawnTimer >= spawnDuration)
         {
-            SpawnCustomer(true);
+            spawnTimer = 0f;
+            spawnDuration = Random.Range(5, 12);
+            
+            SpawnCustomer();
         }
+        // if(Input.GetKeyDown(KeyCode.S))
+        // {
+        //     SpawnCustomer(true);
+        // }
 
-        if(Input.GetKeyDown(KeyCode.D))
-        {
-            SpawnCustomer(false);
-        }
+        // if(Input.GetKeyDown(KeyCode.D))
+        // {
+        //     SpawnCustomer(false);
+        // }
 
         // for debugging a rejection
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            RejectCustomer();
-        }
+        // if(Input.GetKeyDown(KeyCode.R))
+        // {
+        //     RejectCustomer();
+        // }
     }
 
     private void GenerateBacklog()
@@ -160,7 +170,7 @@ public class CustomerSpawner : MonoSingleton<CustomerSpawner>
         return _neededItem;
     }
 
-    public void SpawnCustomer(bool hasItem = false)
+    public void SpawnCustomer()
     {
         if (backlogCustomers.Count <= 0)
         {
