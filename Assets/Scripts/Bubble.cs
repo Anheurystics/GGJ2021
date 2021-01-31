@@ -60,11 +60,11 @@ public class Bubble : MonoBehaviour
                 subColor.sprite = subColors[sig[1]];
                 break;
             case 2:
-                damage.gameObject.SetActive(true);
+                damage.gameObject.SetActive(sig[2] == 1);
                 damage.sprite = dotSprite;
                 break;
             case 3:
-                sticker.gameObject.SetActive(true);
+                sticker.gameObject.SetActive(sig[3] == 1);
                 sticker.sprite = dotSprite;
                 break;
         }
