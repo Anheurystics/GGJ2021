@@ -40,6 +40,7 @@ public class GameManager : MonoSingleton<GameManager>
         startSign = GameObject.Find("StartSign");
         doneSign = GameObject.Find("DoneSign");
 
+        AudioManager.Instance.PlayBGMGame();
         StartCoroutine(nameof(ShowReadyStartSigns));
     }
 
@@ -56,8 +57,6 @@ public class GameManager : MonoSingleton<GameManager>
         yield return new WaitForSeconds(1.5f);
         modalObj.HideModal();
         StartCoroutine(nameof(DecrementClock));
-
-        AudioManager.Instance.PlayBGMGame();
     }
 
     IEnumerator DecrementClock()
