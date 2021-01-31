@@ -148,6 +148,9 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 64cbde965de699542ad7fa7e4de6c14c, type: 3}
   sfxPickup: {fileID: 8300000, guid: 605d8f7cbe3cbb34dba33eba5b5effbb, type: 3}
   sfxPutdown: {fileID: 8300000, guid: f063c7d417d66bd4c914ad8e9dd0e8af, type: 3}
+  sfxCorrect: {fileID: 8300000, guid: d7325bd3cf4ee8048bebb81931072ca9, type: 3}
+  sfxWrong: {fileID: 8300000, guid: 313692f1e4a5cd642af26d62f54adff5, type: 3}
+  _itemSignature: 
   itemName: Book
 --- !u!61 &3226672134908683616
 BoxCollider2D:

@@ -22,6 +22,9 @@ public class Item : MonoBehaviour
     [SerializeField] private SpritePart[] spriteVariants;
     [SerializeField] private AudioClip sfxPickup;
     [SerializeField] private AudioClip sfxPutdown;
+    [SerializeField] private AudioClip sfxCorrect;
+    [SerializeField] private AudioClip sfxWrong;
+
     private Vector3 originalScale = Vector3.one;
     private Drawer drawer;
 
@@ -122,11 +125,13 @@ public class Item : MonoBehaviour
                                 Destroy(gameObject);
                                 currentSelected = null;
                                 CustomerSpawner.Instance.DespawnCustomer();
+                                AudioManager.Instance.PlaySFX(sfxCorrect);
                             }
                             else
                             {
                                 Debug.Log("Not mine but can I have it?");
                                 GameManager.Instance.AddWrongItemGiven();
+                                AudioManager.Instance.PlaySFX(sfxWrong);
                             }
                             break;
                         }
