@@ -152,7 +152,8 @@ MonoBehaviour:
   dropSprite: {fileID: 1240512431996276456}
   damageSprite: {fileID: 21300000, guid: 82d74822f9010f947b7111f15f25d70a, type: 3}
   stickerSprite: {fileID: 21300000, guid: dddd1ca84daf4014d9bc48685d8ad2d3, type: 3}
-  dotSprite: {fileID: 21300000, guid: 0cd393ac760f9c442a6373d0fb5c41ff, type: 3}
+  noDamageSprite: {fileID: 21300000, guid: a84e89a97b9c57b4bb5a65f94a0eab24, type: 3}
+  noStickerSprite: {fileID: 21300000, guid: 37f970675ecfb364fa3ae76d390117fd, type: 3}
 --- !u!1 &1240512432148228549
 GameObject:
   m_ObjectHideFlags: 0

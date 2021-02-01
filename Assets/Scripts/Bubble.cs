@@ -20,7 +20,8 @@ public class Bubble : MonoBehaviour
     [SerializeField] private SpriteRenderer dropSprite;
     [SerializeField] private Sprite damageSprite;
     [SerializeField] private Sprite stickerSprite;
-    [SerializeField] private Sprite dotSprite;
+    [SerializeField] private Sprite noDamageSprite;
+    [SerializeField] private Sprite noStickerSprite;
 
     private Item itemRequired = null;
     private int descriptionCount = 0;
@@ -61,11 +62,11 @@ public class Bubble : MonoBehaviour
                 break;
             case 2:
                 damage.gameObject.SetActive(true);
-                damage.sprite = sig[2] == 1? damageSprite: dotSprite;
+                damage.sprite = sig[2] == 1? damageSprite: noDamageSprite;
                 break;
             case 3:
                 sticker.gameObject.SetActive(true);
-                sticker.sprite = sig[3] == 1? stickerSprite : dotSprite;
+                sticker.sprite = sig[3] == 1? stickerSprite : noStickerSprite;
                 break;
         }
     }
