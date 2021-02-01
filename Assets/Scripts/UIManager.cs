@@ -9,7 +9,8 @@ public class UIManager : MonoSingleton<UIManager>
         EndGame,
         Ready,
         Start,
-        Done
+        Done,
+        Credits
     }
     
     [SerializeField] private GameObject tint;

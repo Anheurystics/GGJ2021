@@ -27,5 +27,6 @@ public class MainMenu : MonoBehaviour
     public void ShowCredits()
     {
         Debug.Log("Showing Credits...");
+        UIManager.Instance.ShowModal(UIManager.Modal.Credits);
     }
 }
