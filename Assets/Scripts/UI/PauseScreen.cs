@@ -1,16 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PauseScreen : MonoBehaviour
 {
     public static bool isPaused = false;
-    private UIModal pauseModal;
-
-    void Awake()
-    {
-        pauseModal = this.GetComponent<UIModal>();
-    }
+    public static bool AllowPause = true;
 
     void Update()
     {
@@ -29,26 +22,24 @@ public class PauseScreen : MonoBehaviour
 
     public void Pause()
     {
+        if(!AllowPause)
+        {
+            return;
+        }
         // just for debugging score
         Debug.Log("Score: " + GameManager.Instance.score);
         Debug.Log("going...will pause");
-        pauseModal.ShowModal();
-        // Need to let the animation play before pausing
-        Invoke(nameof(PauseAfterAnimation), pauseModal.tweenDuration);
-        Cursor.visible = true;
-    }
-
-    private void PauseAfterAnimation()
-    {
+        UIManager.Instance.ShowModal(UIManager.Modal.Pause);
         Time.timeScale = 0f;
         isPaused = true;
+        Cursor.visible = true;
     }
 
     public void Resume()
     {
+        UIManager.Instance.HideModal();
         Time.timeScale = 1f;
         isPaused = false;
-        pauseModal.HideModal();
         Cursor.visible = false;
     }
 }

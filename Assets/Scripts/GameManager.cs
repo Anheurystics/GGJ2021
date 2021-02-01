@@ -22,9 +22,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     private GameObject clockUI;
     private GameObject endGameModal;
-    private GameObject readySign;
-    private GameObject startSign;
-    private GameObject doneSign;
+    [SerializeField] private Text finalScoreText;
+
+    private UIManager UI => UIManager.Instance;
 
     // Start is called before the first frame update
     void Start()
@@ -35,10 +35,10 @@ public class GameManager : MonoSingleton<GameManager>
         gameClock = gameDuration;
 
         clockUI = GameObject.Find("Clock");
-        endGameModal = GameObject.Find("EndGameModal");
-        readySign = GameObject.Find("ReadySign");
-        startSign = GameObject.Find("StartSign");
-        doneSign = GameObject.Find("DoneSign");
+        // endGameModal = GameObject.Find("EndGameModal");
+        // readySign = GameObject.Find("ReadySign");
+        // startSign = GameObject.Find("StartSign");
+        // doneSign = GameObject.Find("DoneSign");
 
         AudioManager.Instance.PlayBGMGame();
         StartCoroutine(nameof(ShowReadyStartSigns));
@@ -46,17 +46,19 @@ public class GameManager : MonoSingleton<GameManager>
 
     IEnumerator ShowReadyStartSigns()
     {
-        var modalObj = readySign.GetComponent<UIModal>();
-        modalObj.ShowModal();
+        PauseScreen.AllowPause = false;
+        UI.ShowModal(UIManager.Modal.Ready, false);
         yield return new WaitForSeconds(2f);
-        modalObj.HideModal();
+        UI.HideModal();
+
         CustomerSpawner.Instance.StartSpawner();
 
-        modalObj = startSign.GetComponent<UIModal>();
-        modalObj.ShowModal();
-        yield return new WaitForSeconds(1.5f);
-        modalObj.HideModal();
-        StartCoroutine(nameof(DecrementClock));
+        UI.ShowModal(UIManager.Modal.Start, false);
+        yield return new WaitForSeconds(2f);
+        UI.HideModal();
+        PauseScreen.AllowPause = true;
+
+        yield return DecrementClock();
     }
 
     IEnumerator DecrementClock()
@@ -73,23 +75,23 @@ public class GameManager : MonoSingleton<GameManager>
 
     IEnumerator TimesUp()
     {
+        PauseScreen.AllowPause = false;
         for (int i = 0; i < CustomerSpawner.Instance.queueSize; i++)
         {
             CustomerSpawner.Instance.DespawnCustomer();
         }
-        var modalObj = doneSign.GetComponent<UIModal>();
-        modalObj.ShowModal();
+
+        UI.ShowModal(UIManager.Modal.Done, false);
         yield return new WaitForSeconds(1.5f);
-        modalObj.HideModal();
+        UI.HideModal();
+
         EndGame();
     }
 
     public void EndGame()
     {
-        var _textobj = endGameModal.transform.Find("UIModalPanel/ScoreNumber");
-        var _text = _textobj.GetComponent<Text>();
-        _text.text = ComputeFinalScore().ToString();
-        endGameModal.GetComponent<UIModal>().ShowModal();
+        finalScoreText.text = ComputeFinalScore().ToString();
+        UI.ShowModal(UIManager.Modal.EndGame);
     }
 
     public void AddCustomerResolved(bool correct)
