@@ -15,7 +15,7 @@ TagManager:
   - Customer
   - Item
   - Pointer
-  - 
+  - Preview
   - 
   - 
   - 
@@ -52,6 +52,9 @@ TagManager:
     locked: 0
   - name: Bubble
     uniqueID: 1355973839
+    locked: 0
+  - name: Clock
+    uniqueID: 4261926777
     locked: 0
   - name: Preview
     uniqueID: 3127959009
